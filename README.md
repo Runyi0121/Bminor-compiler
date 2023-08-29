@@ -1,4 +1,4 @@
-Starter Code for BMinor Project
+Let's go girl!!
 -------------------------------
 
 This directory contains the starter code for the BMinor compiler.
