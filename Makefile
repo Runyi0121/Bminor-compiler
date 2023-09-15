@@ -14,10 +14,14 @@ dirs:
 $(OBJSDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $^ -o $@
 
-test_encoder: dirs $(TARGET)
-	$(SHELL) runtest.sh encode
+$(SRCDIR)/scanner.c: $(SRCDIR)/scanner.flex
+	flex -o src/scanner.c src/scanner.flex
 
-$(TARGET): $(OBJSDIR)/encoder.o $(OBJSDIR)/bminor.o
+test: dirs $(TARGET)
+	$(SHELL) runtest.sh
+
+
+$(TARGET): $(OBJSDIR)/encoder.o $(OBJSDIR)/bminor.o $(OBJSDIR)/library.o $(OBJSDIR)/scanner.o
 	$(CC) $(CFLAGS) $^ -lm -o $@
 
 clean:
