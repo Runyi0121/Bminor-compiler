@@ -1,0 +1,9 @@
+//some variable declaration
+x: float;
+y: integer = 1000000;
+f: float = 3e-4;
+b: boolean = true;
+c: char    = 'w';
+k: array [5] array [5] string;
+g: array [5] integer = {1,2,3,4,5};
+s: string  = "good luck on my mid-term!\n"; 

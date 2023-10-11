@@ -1,10 +1,13 @@
 #include "../inc/encoder.h"
+#include "../inc/parser.h"
 #include "../inc/token.h"
 #include <stdio.h>
 
 extern FILE *yyin;
 extern int yylex();
 extern char *yytext; 
+extern int yyparse();
+extern int yydebug;
 
 void usage(int num)
 {
@@ -20,13 +23,18 @@ void usage(int num)
 int main (int argc, char *argv[]){
     bool check_encode = false;
     bool check_scan = false; 
+    bool check_parse = false;
 
     if (argc == 3){
+        printf("%s %s\n", argv[1], argv[2]);
         if (strcmp(argv[1], "--encode") == 0){
             check_encode = true;
         }
         else if (strcmp(argv[1], "--scan") == 0){
             check_scan = true;
+        }
+        else if (strcmp(argv[1], "--parse") == 0){
+            check_parse = true;
         }
         else{    
             printf("Do not have the right command arguments.\n");
@@ -38,16 +46,31 @@ int main (int argc, char *argv[]){
         return 1;
     }
 
-    if (check_scan == true){
+    if (check_parse == true){
         char * file = argv[2];
         yyin = fopen (file, "r");
         if (! yyin){
             usage(1);
         }
-
+        yydebug = 0;
+        int y = yyparse();
+        if ( y == 0 ){
+                printf("Parse successful!\n");
+                return 0;
+        } else {
+                printf("Parse failed.\n");
+                return 1;
+            }
+    }
+    else if (check_scan == true){
+        char * file = argv[2];
+        yyin = fopen (file, "r");
+        if (! yyin){
+            usage(1);
+        }
         while(1) {
             int sentinel = 0;
-            token_t t = yylex();
+            int t = yylex();
             switch (t){
                 case TOKEN_CCOMMENT:
                     printf("%-20s %20s\n", "TOKEN_CCOMMENT", yytext);
@@ -209,18 +232,18 @@ int main (int argc, char *argv[]){
                     printf("Invalid Token!\n", yytext);
                     return 1;
                     break;
+                case 0:
                 case TOKEN_EOF:
                     sentinel = -1;
                     return 0;
                     break;
                 default:
-                    sentinel = 1;
-                    printf("bad case:%s\n", yytext);
+                    sentinel = 1; 
+                    printf("bad case:!%s!%d!\n", yytext, t);
                     return 1;
             }
             if (sentinel == -1) break;
             else if (sentinel == 1) return 1;
-
         }
     }
     else if (check_encode = true) {
@@ -256,5 +279,5 @@ int main (int argc, char *argv[]){
             printf("\n");
             } 
     }
-
+    return 0;
 }

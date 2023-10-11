@@ -123,14 +123,17 @@ int string_decode( const char *es, char *s ){
             else if ( *old >= 0x20 && *old <= 0x7E) {
                 if (*old == '\"'){
                     check_back_quote ++;
+                    printf("back:%d\n", check_back_quote);
                 }
                 *new = *old ;
                 new ++; 
                 length ++;
         }
         old ++;
+        //printf("fake:%d\n", check_fake_quote);
     }
-    if (check_back_quote >1){
+    //if (check_back_quote >1 || check_back_quote < 1){
+    if (check_back_quote != 1) {
         return 1;
     }
     new --;

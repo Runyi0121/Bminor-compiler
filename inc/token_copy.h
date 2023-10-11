@@ -1,7 +1,6 @@
 #ifndef TOKEN_H
 #define TOKEN_H
-#include "parser.h"
-/*
+
 typedef enum {
      TOKEN_EOF=0,
      TOKEN_CCOMMENT,
@@ -60,8 +59,8 @@ typedef enum {
      TOKEN_TYPE_STRING,
      TOKEN_ERROR
  } token_t;
-*/
-int checkstring (char *yytext);
-int checkchar (char *yytext);
+
+token_t checkstring (char *yytext);
+token_t checkchar (char *yytext);
 
  #endif

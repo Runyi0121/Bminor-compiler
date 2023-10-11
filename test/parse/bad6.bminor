@@ -1,0 +1,2 @@
+//arrays
+x:array integer = {1, 2,3,4};
