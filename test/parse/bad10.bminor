@@ -1,0 +1,6 @@
+// do not have semicolon and brackets
+main:function void()=
+
+	y++;
+	x++
+}

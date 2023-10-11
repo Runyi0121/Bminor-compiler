@@ -1,0 +1,9 @@
+// function
+
+abs: function integer (x: integer) = {
+    if (x < 0) {
+        return -x;
+    } else {
+        return x;
+    }
+}

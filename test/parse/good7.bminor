@@ -1,0 +1,14 @@
+// block of code
+
+main: function void () =
+{
+    N: integer = 10;
+    sum: integer = 0;
+    i: integer;
+    
+    for (i = 1; i <= N; i = i + 1) {
+        sum = sum + i;
+    }
+    
+    return sum;
+}

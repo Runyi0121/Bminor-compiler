@@ -1,15 +1,5 @@
 #!/bin/sh
 
-for testfile in ./test/encode/good*.bminor
-do
-	if ./bminor --encode $testfile > $testfile.out
-	then
-		echo "$testfile success (as expected)"
-	else
-		echo "$testfile failure (INCORRECT)"
-	fi
-done
-
 for testfile in ./test/encode/bad*.bminor
 do
 	if ./bminor --encode $testfile > $testfile.out
@@ -17,6 +7,16 @@ do
 		echo "$testfile success (INCORRECT)"
 	else
 		echo "$testfile failure (as expected)"
+	fi
+done
+
+for testfile in ./test/encode/good*.bminor
+do
+	if ./bminor --encode $testfile > $testfile.out
+	then
+		echo "$testfile success (as expected)"
+	else
+		echo "$testfile failure (INCORRECT)"
 	fi
 done
 
@@ -37,5 +37,26 @@ do
 		echo "$testfile success (INCORRECT)"
 	else
 		echo "$testfile failure (as expected)"
+	fi
+done
+
+for testfile in ./test/parse/bad*.bminor
+do
+	echo $testfile
+	if ./bminor --parse $testfile > $testfile.out
+	then
+		echo "$testfile success (INCORRECT)"
+	else
+		echo "$testfile failure (as expected)"
+	fi
+done
+
+for testfile in ./test/parse/good*.bminor
+do
+	if ./bminor --parse $testfile > $testfile.out
+	then
+		echo "$testfile success (as expected)"
+	else
+		echo "$testfile failure (INCORRECT)"
 	fi
 done

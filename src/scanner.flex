@@ -1,4 +1,5 @@
 %{
+#include "../inc/parser.h"
 #include "../inc/token.h"
 #include "../inc/encoder.h"
 %}
@@ -71,7 +72,7 @@ while           {return TOKEN_WHILE;}
 %%
 int yywrap()    { return 1; }
 
-token_t checkstring (char * yytext) {
+int checkstring (char * yytext) {
     //printf("%s\n", yytext);
     char buffer [256] = ""; // initialize for encode s
     int return_check_encode;
@@ -90,7 +91,7 @@ token_t checkstring (char * yytext) {
     return TOKEN_TYPE_STRING;
 }
 
-token_t checkchar (char * yytext) {
+int checkchar (char * yytext) {
     char buffer [256] = ""; // initialize for encode s
     //printf("%s\n", yytext);
     int return_check_encode;

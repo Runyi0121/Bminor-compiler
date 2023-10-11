@@ -1,0 +1,4 @@
+// check invalid grammar
+
+x: integer = 1;
+x++--;

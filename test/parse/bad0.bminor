@@ -1,0 +1,3 @@
+// bad parameter
+
+main:function void(hello:string,,)

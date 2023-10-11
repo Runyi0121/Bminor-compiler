@@ -1,0 +1,10 @@
+// test nested for loops
+for(;;) {
+		for(;;) {
+			for(;;) {
+				for(;;) {
+					
+				}
+			}
+		}
+	}
