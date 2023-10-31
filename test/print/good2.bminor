@@ -1,0 +1,12 @@
+/* Function prototypes are declarations without bodies. */
+
+Happynewyear: function char ( c: char );
+
+Merrychristmas: function integer ( s: string, i: integer );
+
+/* Function body has some code in it */
+
+Happythanksgiving: function integer ( width: integer, height: integer ) =
+{
+	return width * height;
+}

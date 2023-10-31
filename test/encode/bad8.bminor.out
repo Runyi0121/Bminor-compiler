@@ -1,2 +1,3 @@
+--encode ./test/encode/bad8.bminor
 there is nothing behind the escape.
 There is an error in the original string.

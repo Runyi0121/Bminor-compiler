@@ -1,1 +1,2 @@
+--encode ./test/encode/good2.bminor
 "0xPP \n 0xzz \0xFF 0xqq \r \b"

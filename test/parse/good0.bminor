@@ -1,10 +1,8 @@
 // test nested for loops
-for(;;) {
-		for(;;) {
-			for(;;) {
-				for(;;) {
-					
-				}
-			}
-		}
-	}
+a: array [10] integer = {100,200,300,400,500,600,700,800,900};
+b: array [10] integer;
+c: array [10] array [10] integer;
+
+testfunc: function void () = {
+
+}

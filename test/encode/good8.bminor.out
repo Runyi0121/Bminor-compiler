@@ -1,1 +1,2 @@
+--encode ./test/encode/good8.bminor
 "Read\f the\n in\nstruc\ntions care\nfully\n"

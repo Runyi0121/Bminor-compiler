@@ -1,10 +1,14 @@
 // test if-else statements
 x: integer = 4;
 y: integer = -1;
-if (x > 3) {
-    if (y > 5) {
-        print "Both conditions are true.\n" ;
+
+min: function integer ( a: integer, b: integer ) =
+{
+    if (x > 3) {
+        if (y > 5) {
+            print "Both conditions are true.\n" ;
+        }
+    } else {
+        print "Only the first condition is true.\n" ;
     }
-} else {
-    print "Only the first condition is true.\n" ;
 }

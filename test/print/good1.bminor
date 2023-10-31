@@ -1,0 +1,11 @@
+/* A program is a sequence of declarations */
+
+x: integer;
+y: integer = 300;
+
+b: boolean;
+c: boolean = true;
+s: string;
+t: string = "goodjob\n";
+d: char;
+e: char = '\0x05';

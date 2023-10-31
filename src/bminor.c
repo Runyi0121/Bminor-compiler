@@ -1,13 +1,19 @@
 #include "../inc/encoder.h"
-#include "../inc/parser.h"
 #include "../inc/token.h"
+#include "../inc/parser.h"
+#include "../inc/decl.h"
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdlib.h>
+#include <string.h>
 
 extern FILE *yyin;
 extern int yylex();
 extern char *yytext; 
 extern int yyparse();
-extern int yydebug;
+//extern int yydebug;
+extern struct decl * parser_result;
 
 void usage(int num)
 {
@@ -24,6 +30,7 @@ int main (int argc, char *argv[]){
     bool check_encode = false;
     bool check_scan = false; 
     bool check_parse = false;
+    bool check_print = false;
 
     if (argc == 3){
         printf("%s %s\n", argv[1], argv[2]);
@@ -36,6 +43,9 @@ int main (int argc, char *argv[]){
         else if (strcmp(argv[1], "--parse") == 0){
             check_parse = true;
         }
+        else if (strcmp(argv[1], "--print") == 0){
+            check_print = true;
+        }
         else{    
             printf("Do not have the right command arguments.\n");
             return 1;
@@ -46,13 +56,28 @@ int main (int argc, char *argv[]){
         return 1;
     }
 
-    if (check_parse == true){
+    if (check_print == true){
         char * file = argv[2];
         yyin = fopen (file, "r");
         if (! yyin){
             usage(1);
         }
-        yydebug = 0;
+        int y = yyparse();
+        decl_print(parser_result, 0);
+        if ( y == 0 ){
+                return 0;
+        } else {
+                printf("Parse failed.\n");
+                return 1;
+            }
+    }
+    else if (check_parse == true){
+        char * file = argv[2];
+        yyin = fopen (file, "r");
+        if (! yyin){
+            usage(1);
+        }
+        //yydebug = 0;
         int y = yyparse();
         if ( y == 0 ){
                 printf("Parse successful!\n");
@@ -232,7 +257,6 @@ int main (int argc, char *argv[]){
                     printf("Invalid Token!\n", yytext);
                     return 1;
                     break;
-                case 0:
                 case TOKEN_EOF:
                     sentinel = -1;
                     return 0;

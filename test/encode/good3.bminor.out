@@ -1,1 +1,2 @@
+--encode ./test/encode/good3.bminor
 "Hello \" \" Hello"
