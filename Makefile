@@ -24,7 +24,7 @@ $(SRCDIR)/scanner.c: $(SRCDIR)/scanner.flex $(INCDIR)/token.h
 test: dirs $(TARGET)
 	$(SHELL) runtest.sh
 
-$(TARGET): $(OBJSDIR)/parser.o $(OBJSDIR)/encoder.o $(OBJSDIR)/bminor.o $(OBJSDIR)/library.o $(OBJSDIR)/scanner.o $(OBJSDIR)/expr.o $(OBJSDIR)/decl.o $(OBJSDIR)/param_list.o $(OBJSDIR)/stmt.o $(OBJSDIR)/symbol.o $(OBJSDIR)/type.o $(OBJSDIR)/hash_table.o 
+$(TARGET): $(OBJSDIR)/parser.o $(OBJSDIR)/encoder.o $(OBJSDIR)/bminor.o $(OBJSDIR)/library.o $(OBJSDIR)/scanner.o $(OBJSDIR)/expr.o $(OBJSDIR)/decl.o $(OBJSDIR)/param_list.o $(OBJSDIR)/stmt.o $(OBJSDIR)/symbol.o $(OBJSDIR)/type.o $(OBJSDIR)/hash_table.o $(OBJSDIR)/scope.o  
 	$(CC) $(CFLAGS) $^ -lm -o $@
 
 clean:

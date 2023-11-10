@@ -1,0 +1,22 @@
+December: function integer (a:integer, b:integer);
+January: function boolean (a:integer, b:integer);
+February: function string (a:integer);
+
+main: function void () =
+{
+	str: string = "hi";
+}
+
+/* Parameter type differs from prototype. */
+
+February: function string (a:boolean) =
+{
+	return "hello!";
+}
+
+/* Return type differs from prototype. */
+
+January: function integer (a:integer, b:integer) =
+{ 
+	return a + b;
+}

@@ -1,5 +1,7 @@
 #include "../inc/expr.h"
+#include "../inc/scope.h"
 #include <stdlib.h>
+extern int resolve_error;
 
 struct expr * expr_create( expr_t kind, struct expr *left, struct expr *right ) {
     struct expr* e = malloc(sizeof(struct expr));
@@ -182,7 +184,6 @@ void expr_print( struct expr *e ) {
             break;
         case EXPR_ARR_DECL:
             if (e->mid != 0) {
-            //printf("{");
                 expr_print(e->mid);
                 t = e->mid->next;
                 while(t) {
@@ -190,7 +191,6 @@ void expr_print( struct expr *e ) {
                     expr_print(t);
                     t = t->next;
                 };
-                //printf("}");
             }
             break;
         case EXPR_GROUP:
@@ -212,12 +212,26 @@ void expr_print( struct expr *e ) {
 int compare_expr( struct expr *expr, struct expr *expr_next, int right ) {
     if(expr_next->kind == EXPR_ASSIGN || expr_next->kind == EXPR_EXPON)
         right = !right;
-    
     if(expr_next->kind > expr->kind) return 1;
-
     if(expr_next->kind == expr->kind) {
         if (expr_next->group && right == 0) return 0;
         else return 1;
     }
     else return 0;
+}
+
+void expr_resolve( struct scope *s, struct expr *e) {
+    if (e == 0) return;
+    if(e->kind == EXPR_IDENT || e->kind == EXPR_ARRAY) {
+        e->symbol = scope_lookup(s, e->name);
+        if (e->symbol == 0) {
+            resolve_error++;
+            printf("resolve error: %s is not defined\n", e->name);
+        } else symbol_print(e->symbol);
+    } else {
+        expr_resolve(s, e->left);
+        expr_resolve(s, e->mid);
+        expr_resolve(s, e->right);
+        expr_resolve(s, e->next);
+    }
 }

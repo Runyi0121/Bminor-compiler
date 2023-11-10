@@ -1,4 +1,5 @@
 #include "../inc/stmt.h"
+#include "../inc/scope.h"
 #include <stdlib.h>
 
 struct stmt * stmt_create( stmt_t kind, struct decl *decl, struct expr *init_expr, struct expr *expr, struct expr *next_expr, struct stmt *body, struct stmt *else_body, struct stmt *next ) {
@@ -19,22 +20,9 @@ struct stmt * stmt_create( stmt_t kind, struct decl *decl, struct expr *init_exp
 void stmt_print( struct stmt *s, int indent ) {
     if (s == 0) return;
     switch (s->kind) {
-        case STMT_DECL:
-            decl_print(s->decl, indent);
-            stmt_print(s->next, indent);
-            break;
-
-        case STMT_EXPR:
-            indent_print(indent);
-            expr_print(s->expr);
-            printf(";\n");
-            stmt_print(s->next, indent);
-            break;
-
         case STMT_IF_ELSE:
             if (s->else_if == 1) 
                 indent_print(indent);
-            
             printf("if (");
             expr_print(s->expr);
             printf(") ");
@@ -61,7 +49,6 @@ void stmt_print( struct stmt *s, int indent ) {
                     }
                 }
             }
-
             stmt_print(s->next, indent);
             break;
 
@@ -80,7 +67,6 @@ void stmt_print( struct stmt *s, int indent ) {
                 expr_print(s->next_expr);
             }
             printf(") ");
-            
             if(s->body) {
                 if (s->body->kind == STMT_BLOCK) stmt_print(s->body, indent);
                 else {
@@ -90,7 +76,6 @@ void stmt_print( struct stmt *s, int indent ) {
                     printf("}\n");
                 }
             }
-            
             stmt_print(s->next, indent);
             break;
 
@@ -105,7 +90,6 @@ void stmt_print( struct stmt *s, int indent ) {
                 t = t->next;
             }
             printf(";\n");
-
             stmt_print(s->next, indent);
             break;
 
@@ -114,21 +98,74 @@ void stmt_print( struct stmt *s, int indent ) {
             printf("return ");
             expr_print(s->expr);
             printf(";\n");
-
             stmt_print(s->next, indent);
             break;
         
         case STMT_BLOCK:
             if(s->else_if == 0 || s->indent == 0); 
             else indent_print(indent);
-            
             printf("{\n");
             stmt_print(s->body, indent + 1);
             indent_print(indent);
             printf("}\n");
+            stmt_print(s->next, indent);
+            break;
+                case STMT_DECL:
+            decl_print(s->decl, indent);
+            stmt_print(s->next, indent);
+            break;
 
+        case STMT_EXPR:
+            indent_print(indent);
+            expr_print(s->expr);
+            printf(";\n");
             stmt_print(s->next, indent);
             break;
 
     }
+}
+
+void stmt_resolve( struct scope *sco, struct stmt *stmt) {
+    if (stmt == 0) return;
+    int which;
+    switch (stmt->kind) {
+
+        case STMT_EXPR:
+        case STMT_PRINT:
+        case STMT_RETURN:
+            expr_resolve(sco, stmt->expr);
+            break;
+
+        case STMT_DECL:
+            decl_resolve(sco, stmt->decl);
+            break;
+
+        case STMT_IF_ELSE:
+            expr_resolve(sco, stmt->expr);
+            stmt_resolve(sco, stmt->body);
+            stmt_resolve(sco, stmt->else_body);
+            break;
+
+        case STMT_FOR:
+            expr_resolve(sco, stmt->init_expr);
+            expr_resolve(sco, stmt->expr);
+            expr_resolve(sco, stmt->next_expr);
+            stmt_resolve(sco, stmt->body);
+            break;
+
+        case STMT_BLOCK:
+            which = sco->which;
+            if (stmt->in_func == 0)
+                stmt_resolve(sco, stmt->body);
+            else {
+                scope_enter(sco);
+                sco->next->which = which;
+                stmt_resolve(sco->next, stmt->body);
+                sco->which = sco->next->which;
+                scope_exit(sco->next);
+            }
+            break;
+    }
+
+    stmt_resolve(sco, stmt->next);
 }

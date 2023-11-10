@@ -1,0 +1,12 @@
+April: integer = 5;
+May: integer = 10;
+
+Bad: function void ()=
+{
+	April:integer = May * 10 + 15 - Good();
+}
+
+Good: function char () =
+{
+	return 'a';
+}

@@ -1,0 +1,6 @@
+testfunc: function void ( z: integer ) =
+{
+	// float operations
+	f: integer = 3 + z;
+	g: float = 34.1e7 + 9.9e3;
+}

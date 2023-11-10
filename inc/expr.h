@@ -69,5 +69,5 @@ struct expr * expr_create_string_literal( const char *str );
 
 void expr_print( struct expr *e );
 int compare_expr( struct expr *expr, struct expr * expr_next, int right);
-
+void expr_resolve( struct scope *s, struct expr *e);
 #endif

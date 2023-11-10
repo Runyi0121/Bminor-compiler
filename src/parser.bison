@@ -102,13 +102,13 @@ decl_list: decl decl_list
 	;
 
 decl: ident TOKEN_COLON type TOKEN_SEMICOLON
-	{ $$ = decl_create($1, $3, 0, 0, 0); }
+	{ $$ = decl_create($1, $3, 0, 0, 0);}
 	| ident TOKEN_COLON type TOKEN_ASSIGN expr_list TOKEN_SEMICOLON
-	{ $$ = decl_create($1, $3, $5, 0, 0); }
+	{ $$ = decl_create($1, $3, $5, 0, 0);}
 	| ident TOKEN_COLON type TOKEN_ASSIGN TOKEN_FRONTCURLYBRACKET stmt_array TOKEN_BACKCURLYBRACKET
 	{ $$ = decl_create($1, $3, 0, stmt_create(STMT_BLOCK, 0, 0, 0, 0, $6, 0, 0), 0); }
 	| ident TOKEN_COLON type TOKEN_ASSIGN TOKEN_FRONTCURLYBRACKET array_content TOKEN_BACKCURLYBRACKET TOKEN_SEMICOLON
-	{ $$ = decl_create($1, $3, $6 , 0, 0); }
+	{ $$ = decl_create($1, $3, $6 , 0, 0);  }
 	;
 
 stmt_array: stmt_list
@@ -118,9 +118,9 @@ stmt_array: stmt_list
 	;
 
 array_content: expr TOKEN_COMMA array_content 
-	{$$ = expr_create_decl(EXPR_ARR_DECL, $1); $1 -> next = $3;}
-	| expr
-	{ $$ = $1; }
+	{$$ = expr_create_decl(EXPR_ARR_DECL, $1); $1 -> next = $3; }
+	| expr_base
+	{ $$ = $1;}
 	;
 
 ident: TOKEN_TYPE_IDENT
@@ -131,7 +131,7 @@ type: TOKEN_INTEGER
 	| TOKEN_BOOLEAN
 	{ $$ = type_create(TYPE_BOOLEAN, 0, 0);}
 	| TOKEN_ARRAY TOKEN_FRONTSQUAREBRACKET optional_stmt TOKEN_BACKSQUAREBRACKET type
-	{ $$ = type_create(TYPE_ARRAY, $5, 0); $$ -> arr_expr = $3; }
+	{ $$ = type_create(TYPE_ARRAY, $5, 0); $$ -> arr_expr = $3;}
 	| TOKEN_CHAR
 	{ $$ = type_create(TYPE_CHARACTER, 0, 0);}
 	| TOKEN_FLOAT
@@ -161,14 +161,11 @@ arg: ident TOKEN_COLON type
 	{ $$ = param_list_create( $1, $3, 0); }
 	;
 
-
-
 stmt_list: stmt stmt_list
 	{ $1 -> next = $2; $$ = $1; }
 	| stmt
 	{ $$ = $1; }
 	;
-
 
 stmt: stmt_recursive
 	{ $$ = $1; }
@@ -211,7 +208,7 @@ optional_stmt: expr
 	{ $$ = 0; }
 	;
 
-expr_list: expr TOKEN_COMMA expr_list 
+expr_list: expr TOKEN_COMMA expr_list
 	{ $1 -> next = $3; $$ = $1; }
 	| expr
 	{ $$ = $1; }
@@ -306,7 +303,7 @@ expr_base: TOKEN_TYPE_CHAR
 	| TOKEN_FALSE
 	{ $$ = expr_create_boolean_literal(1);}
 	| TOKEN_TYPE_FLOAT
-	{ $$ = expr_create_integer_literal(atof(yytext));}
+	{ $$ = expr_create_float_literal(atof(yytext));}
 	| TOKEN_TYPE_STRING
 	{ $$ = expr_create_string_literal(strdup(yytext));}
 	| ident others

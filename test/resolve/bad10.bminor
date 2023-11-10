@@ -1,0 +1,17 @@
+yay: integer = 100;
+
+main: function void ()=
+{
+	yay: integer = 1;
+	{
+		
+		yay: integer = -2;
+		{
+			
+			x: integer = 666;
+			yay: integer = 9999;
+		}
+		yay = x + yay;
+	}
+}
+	
