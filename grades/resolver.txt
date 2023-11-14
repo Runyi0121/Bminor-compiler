@@ -1,0 +1,1964 @@
+=====STUDENT TESTS=====
+====Good Tests====
+===[good1.bminor Input]===
+x: integer = 5;
+y: integer = 10;
+
+main: function void ()=
+{
+	x: integer = y * 10 + 15 - 4;
+}
+	
+===[good1.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good1.bminor
+x:integer = 5;
+y:integer = 10;
+main:function void () = {
+	x:integer = (y * 10 + 15) - 4;
+}
+y resolves to global y
+
+
+return code: 0
+
+
+===[good10.bminor Input]===
+June: function void ( x: integer, y:integer, z:integer ) = {
+
+        r: integer;
+	  	b: boolean;
+
+          // Parens required
+	  r = (x+y)/z;
+	  r = x+(y+z);
+	  b = (true||false) && (false||true);
+
+          // Parens not required
+	  r = x+(y/z);
+	  r = (x+y)+z;
+	  b = (x+y) < (x+z);
+	  b = (true&&false) || (false&&true);
+
+}
+===[good10.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good10.bminor
+June:function void ( x: integer, y: integer, z: integer ) = {
+	r:integer;
+	b:boolean;
+	r = (x + y) / z;
+	r = x + (y + z);
+	b = (true || false) && (false || true);
+	r = x + y / z;
+	r = x + y + z;
+	b = x + y < x + z;
+	b = true && false || false && true;
+}
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+b resolves to local 5
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+b resolves to local 5
+x resolves to param 1
+y resolves to param 2
+x resolves to param 1
+z resolves to param 3
+b resolves to local 5
+
+
+return code: 0
+
+
+===[good2.bminor Input]===
+December: function integer (x: integer) = {
+    if (x < 0) {
+        return -x;
+    } else {
+        return x;
+    }
+}
+===[good2.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good2.bminor
+December:function integer ( x: integer ) = {
+	if (x < 0) {
+		return  - x;
+	}
+	else {
+		return x;
+	}
+}
+x resolves to param 1
+x resolves to param 1
+x resolves to param 1
+
+
+return code: 0
+
+
+===[good3.bminor Input]===
+x:integer = 65;
+s:string = "hello";
+b:boolean = false;
+October:function integer ( a: integer, b: integer ) = {
+	if (a > b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+November:function void ( z: integer, min: array [200] integer) = {
+	print "minimum", min[105], "\n", z = 10, z == 10;
+}
+===[good3.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good3.bminor
+x:integer = 65;
+s:string = "hello";
+b:boolean = false;
+October:function integer ( a: integer, b: integer ) = {
+	if (a > b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+November:function void ( z: integer, min: array[200] integer ) = {
+	print "minimum", min[105], "\n", z = 10, z == 10;
+}
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+b resolves to param 2
+min resolves to param 2
+
+
+return code: 0
+
+
+===[good4.bminor Input]===
+testit:function boolean ( x: integer, y: integer ) = {
+	if (x < y) {
+		print "less\n";
+	}
+	else {
+		print "low\n";
+	}
+	if (x < y) {
+		print "less\n";
+	}
+	else {
+		print "low\n";
+	}
+	if (20 < 10) {
+		if (10 < 20) {
+			print "incorrect!";
+		}
+		else {
+			print "dangling else!";
+		}
+	}
+	if (x > y) {
+		i:integer;
+		for (i = 0; i < x; i++) {
+			print i, "\n";
+		}
+	}
+	else {
+		j:integer;
+		for (j = 0; j < y; j++) {
+			print j, "\n";
+		}
+	}
+	k:integer;
+	for (k = 0; k < x; k++) {
+		if (k < x) {
+			print "small";
+		}
+		else {
+			print "large";
+		}
+	}
+	return true;
+}
+===[good4.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good4.bminor
+testit:function boolean ( x: integer, y: integer ) = {
+	if (x < y) {
+		print "less\n";
+	}
+	else {
+		print "low\n";
+	}
+	if (x < y) {
+		print "less\n";
+	}
+	else {
+		print "low\n";
+	}
+	if (20 < 10) {
+		if (10 < 20) {
+			print "incorrect!";
+		}
+		else {
+			print "dangling else!";
+		}
+	}
+	if (x > y) {
+		i:integer;
+		for (i = 0; i < x; i++) {
+			print i, "\n";
+		}
+	}
+	else {
+		j:integer;
+		for (j = 0; j < y; j++) {
+			print j, "\n";
+		}
+	}
+	k:integer;
+	for (k = 0; k < x; k++) {
+		if (k < x) {
+			print "small";
+		}
+		else {
+			print "large";
+		}
+	}
+	return true;
+}
+x resolves to param 1
+y resolves to param 2
+x resolves to param 1
+y resolves to param 2
+x resolves to param 1
+y resolves to param 2
+i resolves to local 3
+i resolves to local 3
+x resolves to param 1
+i resolves to local 3
+i resolves to local 3
+j resolves to local 4
+j resolves to local 4
+y resolves to param 2
+j resolves to local 4
+j resolves to local 4
+k resolves to local 5
+k resolves to local 5
+x resolves to param 1
+k resolves to local 5
+k resolves to local 5
+x resolves to param 1
+
+
+return code: 0
+
+
+===[good5.bminor Input]===
+x:integer = 65;
+s:string = "hello";
+b:boolean = false;
+April:function integer ( a: integer, b: integer ) = {
+	if (a < b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+May:function void ( z: integer ) = {
+	y:integer = x * (x * 10 + 55 % 6 + z / 10);
+	print "y: ", y, "\n";
+	c:boolean = x < 100 && y > 200 ||  ! (b = true);
+	print "c: ", c, "\n";
+	d:boolean = s == "goodbye";
+	print "d: ", d, "\n";
+	z = y = x;
+	a:array[100] integer;
+	y = a[10];
+}
+===[good5.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good5.bminor
+x:integer = 65;
+s:string = "hello";
+b:boolean = false;
+April:function integer ( a: integer, b: integer ) = {
+	if (a < b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+May:function void ( z: integer ) = {
+	y:integer = x * (x * 10 + 55 % 6 + z / 10);
+	print "y: ", y, "\n";
+	c:boolean = x < 100 && y > 200 ||  ! (b = true);
+	print "c: ", c, "\n";
+	d:boolean = s == "goodbye";
+	print "d: ", d, "\n";
+	z = y = x;
+	a:array[100] integer;
+	y = a[10];
+}
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+x resolves to global x
+z resolves to param 1
+y resolves to local 2
+x resolves to global x
+y resolves to local 2
+b resolves to global b
+c resolves to local 3
+s resolves to global s
+d resolves to local 4
+z resolves to param 1
+y resolves to local 2
+x resolves to global x
+y resolves to local 2
+a resolves to local 5
+
+
+return code: 0
+
+
+===[good6.bminor Input]===
+testfunc: function void ( z: integer ) =
+{
+	// float operations
+	f: integer = 3 + z;
+	g: float = 34.1e7 + 9.9e3;
+}
+===[good6.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good6.bminor
+testfunc:function void ( z: integer ) = {
+	f:integer = 3 + z;
+	g: = 341000000.000000 + 9900.000000;
+}
+z resolves to param 1
+
+
+return code: 0
+
+
+===[good7.bminor Input]===
+Boo: function void () =
+{
+    N: integer = 10;
+    sum: integer = 0;
+    i: integer;
+    
+    for (i = 1; i <= N; i = i + 1) {
+        sum = sum + i;
+    }
+    
+    return sum;
+}
+===[good7.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good7.bminor
+Boo:function void () = {
+	N:integer = 10;
+	sum:integer = 0;
+	i:integer;
+	for (i = 1; i <= N; i = i + 1) {
+		sum = sum + i;
+	}
+	return sum;
+}
+i resolves to local 3
+i resolves to local 3
+N resolves to local 1
+i resolves to local 3
+i resolves to local 3
+sum resolves to local 2
+sum resolves to local 2
+i resolves to local 3
+sum resolves to local 2
+
+
+return code: 0
+
+
+===[good8.bminor Input]===
+Boo: function void () =
+{
+    N: integer = 10;
+    sum: integer = 0;
+    i: integer;
+    
+    for (i = 1; i <= N; i = i + 1) {
+        sum = sum + i;
+    }
+    
+    return sum;
+}
+===[good8.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good8.bminor
+Boo:function void () = {
+	N:integer = 10;
+	sum:integer = 0;
+	i:integer;
+	for (i = 1; i <= N; i = i + 1) {
+		sum = sum + i;
+	}
+	return sum;
+}
+i resolves to local 3
+i resolves to local 3
+N resolves to local 1
+i resolves to local 3
+i resolves to local 3
+sum resolves to local 2
+sum resolves to local 2
+i resolves to local 3
+sum resolves to local 2
+
+
+return code: 0
+
+
+===[good9.bminor Input]===
+// precedence of operations
+	x: integer = 3;
+	y: integer = 6;
+	w: float = -(4 * x^5) + (4 - 4) >= 16 - 6 * 3 + x && y^2;
+	z: boolean  = true || -(4*x^5) + (4 - 4) >= 16 - 6 * 3 + x && y^2;
+===[good9.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/good9.bminor
+x:integer = 3;
+y:integer = 6;
+w: =  - 4 * x ^ 5 + 4 - 4 >= 16 - 6 * 3 + x && y ^ 2;
+z:boolean = true ||  - 4 * x ^ 5 + 4 - 4 >= 16 - 6 * 3 + x && y ^ 2;
+x resolves to global x
+x resolves to global x
+y resolves to global y
+x resolves to global x
+x resolves to global x
+y resolves to global y
+
+
+return code: 0
+
+
+====Bad Tests====
+===[bad1.bminor Input]===
+x: integer = 5;
+y: integer = 10;
+main: function void ()=
+{
+	x:integer = y * 10 + 15 - test();
+}
+test: function char () =
+{
+	return 'a';
+}
+	
+===[bad1.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad1.bminor
+parse error: syntax error
+Parse failed.
+
+
+return code: 1
+
+
+===[bad10.bminor Input]===
+yay: integer = 100;
+
+main: function void ()=
+{
+	yay: integer = 1;
+	{
+		
+		yay: integer = -2;
+		{
+			
+			x: integer = 666;
+			yay: integer = 9999;
+		}
+		yay = x + yay;
+	}
+}
+	
+===[bad10.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad10.bminor
+yay:integer = 100;
+main:function void () = {
+	yay:integer = 1;
+	{
+		yay:integer = -2;
+		{
+			x:integer = 666;
+			yay:integer = 9999;
+		}
+		yay = x + yay;
+	}
+}
+resolve error: yay is already defined
+resolve error: yay is already defined
+yay resolves to local 1
+x resolves to local 2
+yay resolves to local 1
+
+
+return code: 1
+
+
+===[bad2.bminor Input]===
+/* Now try some expressions */
+
+x: integer = 65;
+y: string = "hello";
+z: boolean = false;
+
+September: function integer ( a: integer, b: integer ) =
+{
+	if( a<b ) return a; else return b;
+}
+
+testfunc: function void ( z: integer ) =
+{
+	// Nested integer operators.
+	y: integer = x*(x*10 + 55%6 + z/10);
+	print "y: ", y, "\n";
+
+	// Nested boolean operations.
+	c: boolean = ( x<100 && y>200 ) || !(b=true);
+	print "c: ", c, "\n";
+
+	// Boolean operations on strings?
+	d: boolean = (s == "goodbye");
+	print "d: ", d, "\n";
+	z = y;
+
+	a: array [100] integer;
+
+	// Function calls and array accesses:
+	y = min(a[10],a[20]);
+}
+
+===[bad2.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad2.bminor
+x:integer = 65;
+y:string = "hello";
+z:boolean = false;
+September:function integer ( a: integer, b: integer ) = {
+	if (a < b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+testfunc:function void ( z: integer ) = {
+	y:integer = x * (x * 10 + 55 % 6 + z / 10);
+	print "y: ", y, "\n";
+	c:boolean = x < 100 && y > 200 ||  ! (b = true);
+	print "c: ", c, "\n";
+	d:boolean = s == "goodbye";
+	print "d: ", d, "\n";
+	z = y;
+	a:array[100] integer;
+	y = min[a[10]a[20]];
+}
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+x resolves to global x
+z resolves to param 1
+y resolves to local 2
+x resolves to global x
+y resolves to local 2
+resolve error: b is not defined
+c resolves to local 3
+resolve error: s is not defined
+d resolves to local 4
+z resolves to param 1
+y resolves to local 2
+y resolves to local 2
+resolve error: min is not defined
+
+
+return code: 1
+
+
+===[bad3.bminor Input]===
+/* string format expr */
+
+x: integer = 65;
+s: string = "hello";
+b: boolean = false;
+
+October: function integer ( a: integer, b: integer ) =
+{
+	if(a > b) return a;
+	else return b;
+}
+
+November: function void ( z: integer ) =
+{
+	print "minimum", min(10, 5), "\n", z=10, z==10;
+}
+===[bad3.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad3.bminor
+x:integer = 65;
+s:string = "hello";
+b:boolean = false;
+October:function integer ( a: integer, b: integer ) = {
+	if (a > b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+November:function void ( z: integer ) = {
+	print "minimum", min[105], "\n", z = 10, z == 10;
+}
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+b resolves to param 2
+resolve error: min is not defined
+
+
+return code: 1
+
+
+===[bad4.bminor Input]===
+/* Test various nestings of if-else statements */
+
+testit: function boolean ( x: integer, y: integer ) = {
+
+	/* If statement without braces */
+	if( x<y ) print "less\n"; else print "low\n";
+
+	/* If statement with braces */
+	if( x<y ) { print "less\n"; } else { print "low\n"; }
+
+	/* This statement should print nothing */
+        if(20<10) if(10<20) print "incorrect!"; else print "dangling else!";
+
+	/* statements and decls inside of if-else */
+
+        if( x>y ) {
+              i: integer;
+              for(i=0;i<x;i++) print i, "\n";
+        } else {
+              i: integer;
+              for(i=0;i<y;i++) print i, "\n";
+        }
+
+	/* A decl can come after a few statements */
+	i: integer;
+
+	/* try the other way around */
+	for(i=0;i<x;i++) {
+              if( i<x ) print "small"; else print "large";
+        }
+
+        return true;
+}
+===[bad4.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad4.bminor
+testit:function boolean ( x: integer, y: integer ) = {
+	if (x < y) {
+		print "less\n";
+	}
+	else {
+		print "low\n";
+	}
+	if (x < y) {
+		print "less\n";
+	}
+	else {
+		print "low\n";
+	}
+	if (20 < 10) {
+		if (10 < 20) {
+			print "incorrect!";
+		}
+		else {
+			print "dangling else!";
+		}
+	}
+	if (x > y) {
+		i:integer;
+		for (i = 0; i < x; i++) {
+			print i, "\n";
+		}
+	}
+	else {
+		i:integer;
+		for (i = 0; i < y; i++) {
+			print i, "\n";
+		}
+	}
+	i:integer;
+	for (i = 0; i < x; i++) {
+		if (i < x) {
+			print "small";
+		}
+		else {
+			print "large";
+		}
+	}
+	return true;
+}
+x resolves to param 1
+y resolves to param 2
+x resolves to param 1
+y resolves to param 2
+x resolves to param 1
+y resolves to param 2
+i resolves to local 3
+i resolves to local 3
+x resolves to param 1
+i resolves to local 3
+i resolves to local 3
+resolve error: i is already defined
+i resolves to local 3
+i resolves to local 3
+y resolves to param 2
+i resolves to local 3
+i resolves to local 3
+resolve error: i is already defined
+i resolves to local 3
+i resolves to local 3
+x resolves to param 1
+i resolves to local 3
+i resolves to local 3
+x resolves to param 1
+
+
+return code: 1
+
+
+===[bad5.bminor Input]===
+x: integer = 65;
+s: string = "hello";
+b: boolean = false;
+
+April: function integer ( a: integer, b: integer ) =
+{
+	if( a<b ) return a; else return b;
+}
+
+May: function void ( z: integer ) =
+{
+	// Nested integer operators.
+	y: integer = x*(x*10 + 55%6 + z/10);
+	print "y: ", y, "\n";
+
+	// Nested boolean operations.
+	c: boolean = ( x<100 && y>200 ) || !(b=true);
+	print "c: ", c, "\n";
+
+	// Boolean operations on strings?
+	d: boolean = (s == "goodbye");
+	print "d: ", d, "\n";
+
+	// Can we stack up assignments?
+	z = y = x;
+
+	a: array [100] integer;
+
+	// Function calls and array accesses:
+	y = min(a[10],a[20]);
+}
+===[bad5.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad5.bminor
+x:integer = 65;
+s:string = "hello";
+b:boolean = false;
+April:function integer ( a: integer, b: integer ) = {
+	if (a < b) {
+		return a;
+	}
+	else {
+		return b;
+	}
+}
+May:function void ( z: integer ) = {
+	y:integer = x * (x * 10 + 55 % 6 + z / 10);
+	print "y: ", y, "\n";
+	c:boolean = x < 100 && y > 200 ||  ! (b = true);
+	print "c: ", c, "\n";
+	d:boolean = s == "goodbye";
+	print "d: ", d, "\n";
+	z = y = x;
+	a:array[100] integer;
+	y = min[a[10]a[20]];
+}
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+x resolves to global x
+z resolves to param 1
+y resolves to local 2
+x resolves to global x
+y resolves to local 2
+b resolves to global b
+c resolves to local 3
+s resolves to global s
+d resolves to local 4
+z resolves to param 1
+y resolves to local 2
+x resolves to global x
+y resolves to local 2
+resolve error: min is not defined
+
+
+return code: 1
+
+
+===[bad6.bminor Input]===
+
+Happynewyear:function boolean (a:integer, b:integer);
+
+main: function void () =
+{
+	x:integer = test2(5, 6);
+	test2(5,6);
+	print test2(11);
+}
+
+Happynewyear: function boolean (a:integer, b:integer) =
+{
+	return a==b;
+}
+===[bad6.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad6.bminor
+Happynewyear:function boolean ( a: integer, b: integer );
+main:function void () = {
+	x:integer = test2[56];
+	test2[56];
+	print test2[11];
+}
+Happynewyear:function boolean ( a: integer, b: integer ) = {
+	return a == b;
+}
+resolve error: test2 is not defined
+resolve error: test2 is not defined
+resolve error: test2 is not defined
+resolve error: function Happynewyear is already defined
+a resolves to param 1
+b resolves to param 2
+
+
+return code: 1
+
+
+===[bad7.bminor Input]===
+December: function integer (a:integer, b:integer);
+January: function boolean (a:integer, b:integer);
+February: function string (a:integer);
+
+main: function void () =
+{
+	str: string = "hi";
+}
+
+/* Parameter type differs from prototype. */
+
+February: function string (a:boolean) =
+{
+	return "hello!";
+}
+
+/* Return type differs from prototype. */
+
+January: function integer (a:integer, b:integer) =
+{ 
+	return a + b;
+}
+===[bad7.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad7.bminor
+December:function integer ( a: integer, b: integer );
+January:function boolean ( a: integer, b: integer );
+February:function string ( a: integer );
+main:function void () = {
+	str:string = "hi";
+}
+February:function string ( a: boolean ) = {
+	return "hello!";
+}
+January:function integer ( a: integer, b: integer ) = {
+	return a + b;
+}
+resolve error: function February is already defined
+resolve error: function January is already defined
+a resolves to param 1
+b resolves to param 2
+
+
+return code: 1
+
+
+===[bad8.bminor Input]===
+March: function void () =
+{
+    i: integer = 10;
+    i: integer = 0;
+    i: integer;
+    
+    for (i = 1; i <= N; i = i + 1) {
+        sum = sum + i;
+    }
+    
+    return sum;
+}
+
+
+===[bad8.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad8.bminor
+March:function void () = {
+	i:integer = 10;
+	i:integer = 0;
+	i:integer;
+	for (i = 1; i <= N; i = i + 1) {
+		sum = sum + i;
+	}
+	return sum;
+}
+resolve error: i is already defined
+resolve error: i is already defined
+i resolves to local 1
+i resolves to local 1
+resolve error: N is not defined
+i resolves to local 1
+i resolves to local 1
+resolve error: sum is not defined
+resolve error: sum is not defined
+i resolves to local 1
+resolve error: sum is not defined
+
+
+return code: 1
+
+
+===[bad9.bminor Input]===
+April: integer = 5;
+May: integer = 10;
+
+Bad: function void ()=
+{
+	April:integer = May * 10 + 15 - Good();
+}
+
+Good: function char () =
+{
+	return 'a';
+}
+===[bad9.bminor Output]===
+Success!
+
+--resolve rshi2-compiler/test/resolve/bad9.bminor
+parse error: syntax error
+Parse failed.
+
+
+return code: 1
+
+
+=====HIDDEN TESTS=====
+====Good Tests====
+===[good1.bminor Input]===
+/* Correct: x used but not defined. */
+
+x: integer = 10;
+
+===[good1.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/good1.bminor
+x:integer = 10;
+
+
+return code: 0
+
+
+===[good10.bminor Input]===
+/* Correct: Many variables to resolve. */
+
+D: function integer() = {
+        d1: integer = 5;
+        d2: integer = d1 + 1; //6
+        {
+                d3: integer = 9;
+                d2: integer = d3 + d1 - 3; //11
+                d4: integer = -1;
+                d2 = d2 + d3; //20
+                print d2 - d4, "\n";
+        }
+        d4: integer = 16;
+        print d2 - d4, '\n';
+        {
+                d4: integer = -2;
+                d3: integer = 1000;
+                print d3 + 10;
+                print "\n";
+                print d4;
+                print '\n';
+        }
+        print d4;
+        return 3;
+}
+
+main: function integer () = {
+        return D();
+}
+
+===[good10.bminor Output]===
+TEST NOT PASSED
+
+--resolve ../hidden-tests/resolver/good10.bminor
+parse error: syntax error
+Parse failed.
+
+
+return code: 1
+
+
+===[good2.bminor Input]===
+/* Correct: redefining a name at the local scope. */
+
+x: integer = 10;
+
+f: function void () = {
+     x: integer = 20;
+     print x, "\n";
+}
+
+
+===[good2.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/good2.bminor
+x:integer = 10;
+f:function void () = {
+	x:integer = 20;
+	print x, "\n";
+}
+x resolves to local 1
+
+
+return code: 0
+
+
+===[good3.bminor Input]===
+/* Correct: redefining a name at the local scope. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     x: integer = 20;
+     if(a<b) {
+          x: integer = 30;
+          print x, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+
+
+===[good3.bminor Output]===
+TEST NOT PASSED
+
+--resolve ../hidden-tests/resolver/good3.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer ) = {
+	x:integer = 20;
+	if (a < b) {
+		x:integer = 30;
+		print x, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+a resolves to param 1
+b resolves to param 2
+resolve error: x is already defined
+x resolves to local 3
+
+
+return code: 1
+
+
+===[good4.bminor Input]===
+/* Correct: Accessing names in different scopes. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+
+}
+
+
+===[good4.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/good4.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer ) = {
+	y:integer = 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+
+
+return code: 0
+
+
+===[good5.bminor Input]===
+/* Correct: f is called multiple times from main. */
+/* (Should resolve the expression before adding the decl of y. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = a * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+
+
+===[good5.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/good5.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer ) = {
+	y:integer = a * 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+main:function integer ( argc: integer, argv: array[] string ) = {
+	f[1020];
+	f[4030];
+}
+a resolves to param 1
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+f resolves to global f
+f resolves to global f
+
+
+return code: 0
+
+
+===[good6.bminor Input]===
+/* Correct: f is prototyped, then defined, then called. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer );
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = a * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+
+
+
+===[good6.bminor Output]===
+TEST NOT PASSED
+
+--resolve ../hidden-tests/resolver/good6.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer );
+f:function void ( a: integer, b: integer ) = {
+	y:integer = a * 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+main:function integer ( argc: integer, argv: array[] string ) = {
+	f[1020];
+	f[4030];
+}
+resolve error: function f is already defined
+a resolves to param 1
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+f resolves to global f
+f resolves to global f
+
+
+return code: 1
+
+
+===[good7.bminor Input]===
+/* Correct: f is prototyped, then called, then defined. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer );
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = a * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+
+
+===[good7.bminor Output]===
+TEST NOT PASSED
+
+--resolve ../hidden-tests/resolver/good7.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer );
+main:function integer ( argc: integer, argv: array[] string ) = {
+	f[1020];
+	f[4030];
+}
+f:function void ( a: integer, b: integer ) = {
+	y:integer = a * 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+f resolves to global f
+f resolves to global f
+resolve error: function f is already defined
+a resolves to param 1
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+
+
+return code: 1
+
+
+===[good8.bminor Input]===
+/* Correct: Resolver should work all the way down the tree. */
+
+f: function void ( n:integer, s: string ) =
+{
+	i:integer;
+
+	for(i=0;i<n;i++) { 
+		if( i%2 == 0 ) {
+			print i, "is even\n";
+		} else {
+			print i, "is odd\n";
+		}
+	}
+
+	/* We can open a new scope with braces */
+	{
+		i: integer;
+		j: integer;
+		for(i=0;i<n;i++) {
+			for(j=0;j<n;j++) {
+				print i, ":", j, " -> ", i*j, " ", s, "\n";
+			}
+		}
+	}
+}
+
+===[good8.bminor Output]===
+TEST NOT PASSED
+
+--resolve ../hidden-tests/resolver/good8.bminor
+f:function void ( n: integer, s: string ) = {
+	i:integer;
+	for (i = 0; i < n; i++) {
+		if (i % 2 == 0) {
+			print i, "is even\n";
+		}
+		else {
+			print i, "is odd\n";
+		}
+	}
+	{
+		i:integer;
+		j:integer;
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < n; j++) {
+				print i, ":", j, " -> ", i * j, " ", s, "\n";
+			}
+		}
+	}
+}
+i resolves to local 3
+i resolves to local 3
+n resolves to param 1
+i resolves to local 3
+i resolves to local 3
+i resolves to local 3
+i resolves to local 3
+resolve error: i is already defined
+i resolves to local 3
+i resolves to local 3
+n resolves to param 1
+i resolves to local 3
+j resolves to local 4
+j resolves to local 4
+n resolves to param 1
+j resolves to local 4
+i resolves to local 3
+
+
+return code: 1
+
+
+===[good9.bminor Input]===
+/* Correct: Different functions can define variables with same params and locals. */
+
+x: integer = 10;
+
+f: function integer ( x: integer ) =
+{
+	y: integer = 20;
+	return x*y;
+}
+
+g: function void ( x: integer ) =
+{
+	y: integer = 30;
+	return x*y;
+}
+
+main: function integer ( argc: integer, argv: array [] string ) =
+{
+	return f(x) + g(x);
+}
+
+===[good9.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/good9.bminor
+x:integer = 10;
+f:function integer ( x: integer ) = {
+	y:integer = 20;
+	return x * y;
+}
+g:function void ( x: integer ) = {
+	y:integer = 30;
+	return x * y;
+}
+main:function integer ( argc: integer, argv: array[] string ) = {
+	return f[x] + g[x];
+}
+x resolves to param 1
+y resolves to local 2
+x resolves to param 1
+y resolves to local 2
+f resolves to global f
+g resolves to global g
+
+
+return code: 0
+
+
+===[good11.bminor Input]===
+e: function integer () = {
+        e: integer = 100;
+	return e;
+}
+
+main: function integer () = {
+        return e();
+}
+
+===[good11.bminor Output]===
+TEST NOT PASSED
+
+--resolve ../hidden-tests/resolver/good11.bminor
+parse error: syntax error
+Parse failed.
+
+
+return code: 1
+
+
+====Bad Tests====
+===[bad1.bminor Input]===
+/* Error: name already used in the global scope. */
+x: integer = 10;
+x: integer = 20;
+
+
+===[bad1.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad1.bminor
+x:integer = 10;
+x:integer = 20;
+resolve error: x is already defined
+
+
+return code: 1
+
+
+===[bad10.bminor Input]===
+/* Error: Function has the same name as a declared variable. */
+
+str: string = "hello";
+
+str: function string ( s: string ) = 
+{
+	return "goodbye";
+}
+
+
+===[bad10.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad10.bminor
+str:string = "hello";
+str:function string ( s: string ) = {
+	return "goodbye";
+}
+resolve error: function str is already defined
+
+
+return code: 1
+
+
+===[bad2.bminor Input]===
+/* Error: Variable z went out of scope. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = 20;
+     if(a<b) {
+          z: integer = 30;
+	  print "a<b\n";
+     }
+     print x, " ", y, " ", z, "\n";
+}
+
+
+===[bad2.bminor Output]===
+TEST NOT PASSED
+
+--resolve ../hidden-tests/resolver/bad2.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer ) = {
+	y:integer = 20;
+	if (a < b) {
+		z:integer = 30;
+		print "a<b\n";
+	}
+	print x, " ", y, " ", z, "\n";
+}
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+
+
+return code: 0
+
+
+===[bad3.bminor Input]===
+/* Error: Cannot refer to variable y in its own definition. */
+/* (Should resolve the expression before adding the decl of y. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+	  print "a<b\n";
+     } else {
+          print "a>=b\n";
+     }
+     print x, " ", y, " ", z, "\n";
+}
+
+
+===[bad3.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad3.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer ) = {
+	y:integer = y * 20;
+	if (a < b) {
+		z:integer = 30;
+		print "a<b\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+	print x, " ", y, " ", z, "\n";
+}
+resolve error: y is not defined
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+
+
+return code: 1
+
+
+===[bad4.bminor Input]===
+/* Error: f has multiple definitions. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+f: function string ( s: string ) = {
+    print "hello";
+    return "goodbye";
+}
+
+
+===[bad4.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad4.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer ) = {
+	y:integer = y * 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+f:function string ( s: string ) = {
+	print "hello";
+	return "goodbye";
+}
+resolve error: y is not defined
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+resolve error: function f is already defined
+
+
+return code: 1
+
+
+===[bad5.bminor Input]===
+/* Error: f is called prior to definition. */
+
+x: integer = 10;
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+
+
+===[bad5.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad5.bminor
+x:integer = 10;
+main:function integer ( argc: integer, argv: array[] string ) = {
+	f[1020];
+	f[4030];
+}
+f:function void ( a: integer, b: integer ) = {
+	y:integer = y * 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+resolve error: f is not defined
+resolve error: f is not defined
+resolve error: y is not defined
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+
+
+return code: 1
+
+
+===[bad6.bminor Input]===
+/* Error: g is not defined. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     g(40,30);
+}
+
+
+===[bad6.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad6.bminor
+x:integer = 10;
+f:function void ( a: integer, b: integer ) = {
+	y:integer = y * 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+main:function integer ( argc: integer, argv: array[] string ) = {
+	f[1020];
+	g[4030];
+}
+resolve error: y is not defined
+a resolves to param 1
+b resolves to param 2
+x resolves to global x
+f resolves to global f
+resolve error: g is not defined
+
+
+return code: 1
+
+
+===[bad8.bminor Input]===
+/* Error: x not defined, deep down in the expression. */
+
+a: integer;
+
+f: function integer ( b: integer ) =
+{
+	c: integer;
+	for(c=0;c<b;c++) {
+		if(a<b) {
+			print a + b * (c / (a+x)), "\n"; 
+		}
+	}
+	return b;
+}
+
+===[bad8.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad8.bminor
+a:integer;
+f:function integer ( b: integer ) = {
+	c:integer;
+	for (c = 0; c < b; c++) {
+		if (a < b) {
+			print a + b * c / (a + x), "\n";
+		}
+	}
+	return b;
+}
+c resolves to local 2
+c resolves to local 2
+b resolves to param 1
+c resolves to local 2
+a resolves to global a
+b resolves to param 1
+a resolves to global a
+b resolves to param 1
+c resolves to local 2
+a resolves to global a
+resolve error: x is not defined
+b resolves to param 1
+
+
+return code: 1
+
+
+===[bad9.bminor Input]===
+/* Error: x redefined after several intervening scopes. */
+
+a: integer;
+
+f: function integer ( b: integer ) =
+{
+	x: integer = 20;
+	{
+		i: integer;
+		for(i=0;i<x;i++) print i;
+	}
+	{
+		j: integer;
+		for(j=0;j<x;j++) print j;
+	}
+	x: integer = 30;
+
+	return x;
+}
+
+===[bad9.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad9.bminor
+a:integer;
+f:function integer ( b: integer ) = {
+	x:integer = 20;
+	{
+		i:integer;
+		for (i = 0; i < x; i++) {
+			print i;
+		}
+	}
+	{
+		j:integer;
+		for (j = 0; j < x; j++) {
+			print j;
+		}
+	}
+	x:integer = 30;
+	return x;
+}
+i resolves to local 3
+i resolves to local 3
+x resolves to local 2
+i resolves to local 3
+i resolves to local 3
+j resolves to local 4
+j resolves to local 4
+x resolves to local 2
+j resolves to local 4
+j resolves to local 4
+resolve error: x is already defined
+x resolves to local 2
+
+
+return code: 1
+
+
+===[bad7.bminor Input]===
+/* Error: Two parameters have the same name */
+/* Also, b is not defined. */
+
+f: function void ( a: integer, a: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+===[bad7.bminor Output]===
+Success!
+
+--resolve ../hidden-tests/resolver/bad7.bminor
+f:function void ( a: integer, a: integer ) = {
+	y:integer = y * 20;
+	if (a < b) {
+		z:integer = 30;
+		print x, " ", y, " ", z, "\n";
+	}
+	else {
+		print "a>=b\n";
+	}
+}
+resolve error: a is already defined
+resolve error: y is not defined
+a resolves to param 1
+resolve error: b is not defined
+resolve error: x is not defined
+
+
+return code: 1
+
+
+===== SUMMARIZED PARSER RESULTS =====
+{
+  "student_tests": {
+    "Good": {
+      "correct": 10,
+      "incorrect": 0
+    },
+    "Bad": {
+      "correct": 10,
+      "incorrect": 0
+    }
+  },
+  "hidden_tests": {
+    "Good": {
+      "correct": 5,
+      "incorrect": 6
+    },
+    "Bad": {
+      "correct": 9,
+      "incorrect": 1
+    }
+  }
+}
+
+Resolver Project Grade
+-------------------
+
+General Structure: 25/25
+---------------------------------
+Overall structure is correct.
+
+Resolver - Manual Checks 25/25 
+--------------------------------------------
+
+Student Tests: 20/20
+---------------------------
+Passes all your tests.
+
+Hidden Tests: 19/20
+---------------------------
+Failed 1 hidden test. Syntax issue 
+
+Code Style: 10/10
+------------------------
+Looks good. Great work
+
+Total: 99/100
+------------------------------------------
