@@ -1,8 +1,25 @@
-x: integer = 5;
-y: integer = 10;
+charFxn: function char(x: char)=
+{
+	if(x == 'a')
+	{
+		return 'z';
+	}
+}
 
 main: function void ()=
 {
-	x: integer = y * 10 + 15 - 4;
+	c: char;
+
+	if('a' == charFxn('c'))
+	{
+		print "unreachable";
+	}
+	if('a' != 'a')
+	{
+		print "unreachable";
+	}
+	if(c == 'a')
+	{
+		print "unreachable";
+	}
 }
-	

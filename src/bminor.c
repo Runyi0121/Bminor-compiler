@@ -1,7 +1,7 @@
 #include "../inc/encoder.h"
-#include "../inc/token.h"
 #include "../inc/parser.h"
 #include "../inc/decl.h"
+#include "../inc/hash_table.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -15,6 +15,7 @@ extern int yyparse();
 //extern int yydebug;
 extern struct decl * parser_result;
 int resolve_error;
+int typecheck_error;
 
 void usage(int num)
 {
@@ -33,6 +34,7 @@ int main (int argc, char *argv[]){
     bool check_parse = false;
     bool check_print = false;
     bool check_resolve = false;
+    bool check_typecheck = false;
 
     if (argc == 3){
         printf("%s %s\n", argv[1], argv[2]);
@@ -51,6 +53,9 @@ int main (int argc, char *argv[]){
         else if (strcmp(argv[1], "--resolve") == 0){
             check_resolve = true;
         }
+        else if (strcmp(argv[1], "--typecheck") == 0){
+            check_typecheck = true;
+        }
         else{    
             printf("Do not have the right command arguments.\n");
             return 1;
@@ -61,7 +66,7 @@ int main (int argc, char *argv[]){
         return 1;
     }
 
-    if (check_resolve == true){
+    if ( check_typecheck == true) {
         char * file = argv[2];
         yyin = fopen (file, "r");
         if (! yyin){
@@ -74,11 +79,37 @@ int main (int argc, char *argv[]){
                 return 1;
                 }
         resolve_error = 0;
-        struct hash_table *hashtable = hash_table_create(0, 0);
-        struct scope *sc = scope_create(1, hashtable, 0, 0);
-        decl_resolve(sc, parser_result);
+        struct hash_table * hashtable = hash_table_create(0, 0);
+        struct scope *sc = scope_create(0, hashtable, 0, 0);
 
+        decl_resolve(sc, parser_result);
         if (resolve_error != 0) return 1;
+        
+        typecheck_error = 0;
+        decl_typecheck(parser_result);
+        if (typecheck_error != 0) return 1;
+
+    }
+    else if (check_resolve == true){
+        char * file = argv[2];
+        yyin = fopen (file, "r");
+        if (! yyin){
+            usage(1);
+        }
+        int y = yyparse();
+        decl_print(parser_result, 0);
+        if ( y ) {
+                printf("Parse failed.\n");
+                return 1;
+                }
+
+        resolve_error = 0;
+        struct hash_table *h = hash_table_create(0, 0);
+        struct scope *sc = scope_create(0, h, 0, 0);
+
+        decl_resolve(sc, parser_result);
+        if (resolve_error != 0) return 1;
+
     }
     else if (check_print == true){
         char * file = argv[2];

@@ -30,9 +30,36 @@ void param_list_resolve( struct scope *s, struct param_list *p ) {
         int bind = scope_bind(s, t->name, sy);
         if (bind == 1) {
             resolve_error++;
-            printf("resolve error: %s is already defined\n", p->name);
+            printf("resolve error: %s previously defined\n", p->name);
         }
         sy->which = s->which;
         t = t->next;
     }
+}
+
+int param_equals( struct param_list *a, struct param_list *b ) {
+    if (!a && !b) return 0;
+    if (!a || !b) return 1;
+    int err = 0;
+    if(type_equals(a->type, b->type) == 1) 
+        err++;
+    if(param_equals(a->next, b->next) == 1) 
+        err++;
+    return err;
+}
+
+int param_typecheck( struct param_list *a ) {
+    struct param_list *t = a;
+    while (a != 0) {
+        if(a->type->kind == TYPE_AUTO)
+            return 0;
+        a = a->next;
+    } 
+    return 1;
+}
+
+struct param_list * param_copy( struct param_list *a ) {
+    if (a == 0)
+        return 0;
+    return param_list_create(a->name, a->type, param_copy(a->next));
 }

@@ -13,28 +13,25 @@ struct scope *scope_create( int level, struct hash_table *hash_table, struct sco
 }
 
 // push new scope
-void scope_enter( struct scope *s ) {
-    if (s == 0) return;
+struct scope * scope_enter( struct scope *s ) {
 
     struct hash_table *h = hash_table_create(0, 0);
     struct scope *new_scope = scope_create(s->level + 1, h, s, 0);
     s->next = new_scope;
+    return new_scope;
 }
 
-// remove scope
-void scope_exit( struct scope *s ) {
-    if (s == 0) return;
-
-    if (s->prev != 0)
-        s->prev->next = 0;
-
+struct scope * scope_exit( struct scope *s ) {
+    struct scope *head = s->next;
     hash_table_delete(s->hash_table);
     //free(s);
+    return head;
 }
 
 // count scopes
 int scope_level( struct scope *s ) {
     return s->level;
+
 }
 
 // write in scope
@@ -51,12 +48,13 @@ int scope_bind( struct scope *s, const char *name, struct symbol *sym ) {
 // lookup in scopes in precedence
 struct symbol *scope_lookup( struct scope *s, const char *name ) {
     if (s == 0) return 0;
-
-    struct symbol *sym = hash_table_lookup(s->hash_table, name);
-    if (sym == 0)
-        sym = scope_lookup(s->prev, name);
-    
-    return sym;
+    if (!name) return 0;
+    if (s->hash_table && name){
+        struct symbol *sym = hash_table_lookup(s->hash_table, name);
+        if (sym == 0)
+            sym = scope_lookup(s->prev, name);
+            return sym;
+    }
 }
 
 // search the current scope

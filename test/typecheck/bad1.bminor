@@ -1,0 +1,11 @@
+January:array [5] integer = {1,2,3,4,5};
+
+main: function void () =
+{
+	x[true] = February();
+}
+
+February: function integer ()=
+{
+	return 3;
+}

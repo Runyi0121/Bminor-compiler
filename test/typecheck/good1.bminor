@@ -1,0 +1,7 @@
+x: integer = 1;
+y: integer = 100000;
+main: function void ()=
+{
+	x: integer = y * 10 + 15 - 4;
+}
+	

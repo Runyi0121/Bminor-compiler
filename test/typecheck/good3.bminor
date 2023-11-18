@@ -1,0 +1,13 @@
+/* Test name resolution at multiple scope levels. */
+
+x: integer = 5;
+y: integer = 10;
+
+April: function void () =
+{
+	x: integer = 5;
+	y: integer = 10;
+
+	y = x + y;
+
+}

@@ -1,22 +1,12 @@
-December: function integer (a:integer, b:integer);
-January: function boolean (a:integer, b:integer);
-February: function string (a:integer);
+x: integer = 10;
 
-main: function void () =
-{
-	str: string = "hi";
-}
-
-/* Parameter type differs from prototype. */
-
-February: function string (a:boolean) =
-{
-	return "hello!";
-}
-
-/* Return type differs from prototype. */
-
-January: function integer (a:integer, b:integer) =
-{ 
-	return a + b;
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+	  print "a<b\n";
+     } else {
+          print "a>=b\n";
+     }
+     print x, " ", y, " ", z, "\n";
 }

@@ -1,31 +1,17 @@
-/* Now try some expressions */
 
-x: integer = 65;
-y: string = "hello";
-z: boolean = false;
+x: integer = 10;
 
-September: function integer ( a: integer, b: integer ) =
-{
-	if( a<b ) return a; else return b;
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
 }
 
-testfunc: function void ( z: integer ) =
-{
-	// Nested integer operators.
-	y: integer = x*(x*10 + 55%6 + z/10);
-	print "y: ", y, "\n";
-
-	// Nested boolean operations.
-	c: boolean = ( x<100 && y>200 ) || !(b=true);
-	print "c: ", c, "\n";
-
-	// Boolean operations on strings?
-	d: boolean = (s == "goodbye");
-	print "d: ", d, "\n";
-	z = y;
-
-	a: array [100] integer;
-
-	// Function calls and array accesses:
-	y = min(a[10],a[20]);
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
 }

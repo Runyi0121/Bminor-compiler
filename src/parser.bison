@@ -108,7 +108,7 @@ decl: ident TOKEN_COLON type TOKEN_SEMICOLON
 	| ident TOKEN_COLON type TOKEN_ASSIGN TOKEN_FRONTCURLYBRACKET stmt_array TOKEN_BACKCURLYBRACKET
 	{ $$ = decl_create($1, $3, 0, stmt_create(STMT_BLOCK, 0, 0, 0, 0, $6, 0, 0), 0); }
 	| ident TOKEN_COLON type TOKEN_ASSIGN TOKEN_FRONTCURLYBRACKET array_content TOKEN_BACKCURLYBRACKET TOKEN_SEMICOLON
-	{ $$ = decl_create($1, $3, $6 , 0, 0);  }
+	{ $$ = decl_create($1, $3, expr_create_decl(EXPR_ARR_DECL, $1, $6) , 0, 0);  }
 	;
 
 stmt_array: stmt_list
@@ -118,7 +118,7 @@ stmt_array: stmt_list
 	;
 
 array_content: expr TOKEN_COMMA array_content 
-	{$$ = expr_create_decl(EXPR_ARR_DECL, $1); $1 -> next = $3; }
+	{ $1 -> next = $3; $$ = $1;}
 	| expr_base
 	{ $$ = $1;}
 	;
@@ -273,7 +273,7 @@ expr_expo: expr_expo TOKEN_EXPONENTIAL expr_not
 	;
 
 expr_not: TOKEN_SUBTRACT expr_not
-	{ $$ = expr_create(EXPR_SUB, 0, $2); }
+	{ $$ = expr_create(EXPR_NEG, 0, $2); }
 	| TOKEN_LOGICALNOT expr_not
 	{ $$ = expr_create(EXPR_LOGICALNOT, 0, $2); }
 	| expr_crement
@@ -313,7 +313,7 @@ expr_base: TOKEN_TYPE_CHAR
 others: TOKEN_FRONTSQUAREBRACKET expr TOKEN_BACKSQUAREBRACKET others
 	{ $2->next = $4; $$ = $2; }
 	| TOKEN_FRONTPARENTHESE expr_list TOKEN_BACKPARENTHESE
-	{ $$ = $2; }
+	{ $$ = expr_create_mid(EXPR_FUNC_CALL, 0, $2); }
 	| 
 	{ $$ = 0; }
 	;	

@@ -1,16 +1,9 @@
-/* string format expr */
-
-x: integer = 65;
-s: string = "hello";
-b: boolean = false;
-
-October: function integer ( a: integer, b: integer ) =
-{
-	if(a > b) return a;
-	else return b;
-}
-
-November: function void ( z: integer ) =
-{
-	print "minimum", min(10, 5), "\n", z=10, z==10;
+f: function void ( a: integer, a: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
 }

@@ -1,0 +1,14 @@
+testhappy:function integer (a:integer, b:integer);
+testsad:function boolean (a:integer, b:integer);
+
+main: function void () =
+{
+	x:integer = testsad(5, 6);
+	testsad(5,6);
+	print testsad(11);
+}
+
+testsad: function boolean (a:integer, b:integer) =
+{
+	return a==b;
+}

@@ -1,4 +1,4 @@
-a: integer;
+abc: integer;
 
 f: function integer ( b: integer ) =
 {
