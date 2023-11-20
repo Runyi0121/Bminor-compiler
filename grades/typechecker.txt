@@ -1,0 +1,1540 @@
+=====STUDENT TESTS=====
+====Good Tests====
+===[STUDENT TESTS/good1.bminor Input]===
+x: integer = 1;
+y: integer = 100000;
+main: function void ()=
+{
+	x: integer = y * 10 + 15 - 4;
+}
+	
+===[STUDENT TESTS/good1.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good1.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good1.bminor
+x:integer = 1;
+y:integer = 100000;
+main:function void () = {
+	x:integer = (y * 10 + 15) - 4;
+}
+y resolves to global y
+
+
+
+
+===[STUDENT TESTS/good10.bminor Input]===
+x: array [5] integer = {1,2,3,4,5};
+y: array [5] array [5] integer;
+
+main: function void () =
+{
+	y[1] = x;
+	count: integer;
+	for(count = 0; count < 5; count++)
+	{
+		y[count] = x;
+	} 	
+}
+===[STUDENT TESTS/good10.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good10.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good10.bminor
+x:array[5] integer = {1, 2, 3, 4, 5};
+y:array[5] array[5] integer;
+main:function void () = {
+	y[1] = x;
+	count:integer;
+	for (count = 0; count < 5; count++) {
+		y[count] = x;
+	}
+}
+y resolves to global y
+x resolves to global x
+count resolves to local 1
+count resolves to local 1
+count resolves to local 1
+y resolves to global y
+count resolves to local 1
+x resolves to global x
+
+
+
+
+===[STUDENT TESTS/good2.bminor Input]===
+December: function integer (x: integer) = {
+    if (x < 0) {
+        return -x;
+    } else {
+        return x;
+    }
+}
+===[STUDENT TESTS/good2.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good2.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good2.bminor
+December:function integer ( x: integer ) = {
+	if (x < 0) {
+		return (x);
+	}
+	else {
+		return x;
+	}
+}
+x resolves to param 1
+x resolves to param 1
+x resolves to param 1
+
+
+
+
+===[STUDENT TESTS/good3.bminor Input]===
+/* Test name resolution at multiple scope levels. */
+
+x: integer = 5;
+y: integer = 10;
+
+April: function void () =
+{
+	x: integer = 5;
+	y: integer = 10;
+
+	y = x + y;
+
+}
+===[STUDENT TESTS/good3.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good3.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good3.bminor
+x:integer = 5;
+y:integer = 10;
+April:function void () = {
+	x:integer = 5;
+	y:integer = 10;
+	y = x + y;
+}
+y resolves to local 2
+x resolves to local 1
+y resolves to local 2
+
+
+
+
+===[STUDENT TESTS/good4.bminor Input]===
+x: integer;
+y: boolean;
+math: function integer (a: boolean, z: integer) = {
+    z = x + 3 - 4 * z / x;
+    z++;
+    -z--;
+    x = 3^z^x;
+    x = z % x + 2;
+    return x + z^2;
+}
+===[STUDENT TESTS/good4.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good4.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good4.bminor
+x:integer;
+y:boolean;
+math:function integer ( a: boolean, z: integer ) = {
+	z = (x + 3) - (4 * z) / x;
+	z++;
+	(z--);
+	x = 3 ^ z ^ x;
+	x = z % x + 2;
+	return x + z ^ 2;
+}
+z resolves to param 2
+x resolves to global x
+z resolves to param 2
+x resolves to global x
+z resolves to param 2
+z resolves to param 2
+x resolves to global x
+z resolves to param 2
+x resolves to global x
+x resolves to global x
+z resolves to param 2
+x resolves to global x
+x resolves to global x
+z resolves to param 2
+
+
+
+
+===[STUDENT TESTS/good5.bminor Input]===
+x: array [5] integer = {1,2,3,4,5};
+y: array [5] array [5] integer;
+
+July: function void () =
+{
+	y[1] = x;
+	count: integer;
+	for(count = 0; count < 5; count++)
+	{
+		y[count] = x;
+	} 	
+}
+===[STUDENT TESTS/good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good5.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good5.bminor
+x:array[5] integer = {1, 2, 3, 4, 5};
+y:array[5] array[5] integer;
+July:function void () = {
+	y[1] = x;
+	count:integer;
+	for (count = 0; count < 5; count++) {
+		y[count] = x;
+	}
+}
+y resolves to global y
+x resolves to global x
+count resolves to local 1
+count resolves to local 1
+count resolves to local 1
+y resolves to global y
+count resolves to local 1
+x resolves to global x
+
+
+
+
+===[STUDENT TESTS/good6.bminor Input]===
+Goodfunction: function void ( x: integer, y:integer, z:integer ) = {
+    r: integer;
+	b: boolean;
+
+          
+	r = (x+y)/z;
+	r = x+(y+z);
+	b = (true||false) && (false||true);
+
+	r = x+(y/z);
+	r = (x+y)+z;
+	b = (x+y) < (x+z);
+	b = (true&&false) || (false&&true);
+}
+===[STUDENT TESTS/good6.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good6.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good6.bminor
+Goodfunction:function void ( x: integer, y: integer, z: integer ) = {
+	r:integer;
+	b:boolean;
+	r = (x + y) / z;
+	r = x + (y + z);
+	b = (true || false) && (false || true);
+	r = x + y / z;
+	r = x + y + z;
+	b = x + y < x + z;
+	b = true && false || false && true;
+}
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+b resolves to local 5
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+r resolves to local 4
+x resolves to param 1
+y resolves to param 2
+z resolves to param 3
+b resolves to local 5
+x resolves to param 1
+y resolves to param 2
+x resolves to param 1
+z resolves to param 3
+b resolves to local 5
+
+
+
+
+===[STUDENT TESTS/good7.bminor Input]===
+strings: string = "bye";
+f: function string () = {
+    if (false) {
+        return "hello";
+    }
+    else {
+        return strings;
+    }
+}
+
+
+===[STUDENT TESTS/good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good7.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good7.bminor
+strings:string = "bye";
+f:function string () = {
+	if (false) {
+		return "hello";
+	}
+	else {
+		return strings;
+	}
+}
+strings resolves to global strings
+
+
+
+
+===[STUDENT TESTS/good8.bminor Input]===
+/* Update one element of an array. */
+
+August:array [5] integer = {1,2,3,4,5};
+
+main:function void () =
+{
+	August[4] = 4;
+}
+===[STUDENT TESTS/good8.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good8.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good8.bminor
+August:array[5] integer = {1, 2, 3, 4, 5};
+main:function void () = {
+	August[4] = 4;
+}
+August resolves to global August
+
+
+
+
+===[STUDENT TESTS/good9.bminor Input]===
+a: integer = 1;
+b: integer = 2;
+c: boolean = false;
+d: string = "hello";
+str: string = "ohno";
+f: function boolean () = {
+    return (a > b) && (a < b) || (a <= b);
+    return true;
+    return (a >= b) && (a != b) || (a == b);
+    return (d == str) || (d != str);
+}
+
+===[STUDENT TESTS/good9.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good9.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/good9.bminor
+a:integer = 1;
+b:integer = 2;
+c:boolean = false;
+d:string = "hello";
+str:string = "ohno";
+f:function boolean () = {
+	return a > b && a < b || a <= b;
+	return true;
+	return a >= b && a != b || a == b;
+	return d == str || d != str;
+}
+a resolves to global a
+b resolves to global b
+a resolves to global a
+b resolves to global b
+a resolves to global a
+b resolves to global b
+a resolves to global a
+b resolves to global b
+a resolves to global a
+b resolves to global b
+a resolves to global a
+b resolves to global b
+d resolves to global d
+str resolves to global str
+d resolves to global d
+str resolves to global str
+
+
+
+
+====Bad Tests====
+===[STUDENT TESTS/bad1.bminor Input]===
+January:array [5] integer = {1,2,3,4,5};
+
+main: function void () =
+{
+	x[true] = February();
+}
+
+February: function integer ()=
+{
+	return 3;
+}
+===[STUDENT TESTS/bad1.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad1.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad1.bminor
+parse error: syntax error
+Parse failed.
+
+
+
+
+===[STUDENT TESTS/bad10.bminor Input]===
+x: integer = 'c';
+	
+===[STUDENT TESTS/bad10.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad10.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad10.bminor
+x:integer = 'c';
+ERRORS: INCOHERENT VALUE TYPE:)
+			cannot assign x which is of type integer to 'c' which is of type char
+
+
+
+
+===[STUDENT TESTS/bad2.bminor Input]===
+March:array [5] integer = {1,2,3,4,5};
+
+main:function void () =
+{
+	March = 4;
+}
+===[STUDENT TESTS/bad2.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad2.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad2.bminor
+March:array[5] integer = {1, 2, 3, 4, 5};
+main:function void () = {
+	March = 4;
+}
+March resolves to global March
+ERRORS: ASSIGNING DIFFERENT TYPES:
+			4 belongs to integer to March belongs to array[5] integer
+
+
+
+
+===[STUDENT TESTS/bad3.bminor Input]===
+testhappy:function integer (a:integer, b:integer);
+testsad:function boolean (a:integer, b:integer);
+
+main: function void () =
+{
+	x:integer = testsad(5, 6);
+	testsad(5,6);
+	print testsad(11);
+}
+
+testsad: function boolean (a:integer, b:integer) =
+{
+	return a==b;
+}
+===[STUDENT TESTS/bad3.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad3.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad3.bminor
+testhappy:function integer ( a: integer, b: integer );
+testsad:function boolean ( a: integer, b: integer );
+main:function void () = {
+	x:integer = testsad[];
+	testsad[];
+	print testsad[];
+}
+testsad:function boolean ( a: integer, b: integer ) = {
+	return a == b;
+}
+testsad resolves to global testsad
+resolve error: (null) is not defined
+testsad resolves to global testsad
+resolve error: (null) is not defined
+testsad resolves to global testsad
+resolve error: (null) is not defined
+
+
+
+
+===[STUDENT TESTS/bad4.bminor Input]===
+yay: array [6] char = {1, -10, -40, -175, 0, 0};
+
+main:function integer () = {
+	yay[5] = -123;
+}
+===[STUDENT TESTS/bad4.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad4.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad4.bminor
+yay:array[6] char = {1, -10, -40, -175, 0, 0};
+main:function integer () = {
+	yay[5] = -123;
+}
+yay resolves to global yay
+ERRORS: ASSIGNING DIFFERENT TYPES:
+			-123 belongs to integer to yay[5] belongs to char
+
+
+
+
+===[STUDENT TESTS/bad5.bminor Input]===
+abc: integer;
+
+f: function integer ( b: integer ) =
+{
+	x: integer = 20;
+	{
+		i: integer;
+		for(i=0;i<x;i++) print i;
+	}
+	{
+		j: integer;
+		for(j=0;j<x;j++) print j;
+	}
+	x: integer = 30;
+
+	return x;
+}
+===[STUDENT TESTS/bad5.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad5.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad5.bminor
+abc:integer;
+f:function integer ( b: integer ) = {
+	x:integer = 20;
+	{
+		i:integer;
+		for (i = 0; i < x; i++) {
+			print i;
+		}
+	}
+	{
+		j:integer;
+		for (j = 0; j < x; j++) {
+			print j;
+		}
+	}
+	x:integer = 30;
+	return x;
+}
+i resolves to local 3
+i resolves to local 3
+x resolves to local 2
+i resolves to local 3
+i resolves to local 3
+j resolves to local 4
+j resolves to local 4
+x resolves to local 2
+j resolves to local 4
+j resolves to local 4
+x resolves to local 2
+
+
+
+
+===[STUDENT TESTS/bad6.bminor Input]===
+y:integer = 10;
+
+main: function void () =
+{
+	if(y > 5 && 'a' || true)
+	{
+		print "ok";
+	}
+}
+===[STUDENT TESTS/bad6.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad6.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad6.bminor
+y:integer = 10;
+main:function void () = {
+	if (y > 5 && 'a' || true) {
+		print "ok";
+	}
+}
+y resolves to global y
+ERRORS: LOGICAL OPERATORS MUST GO BEFORE BOOLEAN VALUES:
+			y > 5 && 'a' : y > 5 belongs to boolean while 'a' belongs to char
+
+
+
+
+===[STUDENT TESTS/bad7.bminor Input]===
+main: function integer ()=
+{
+	return 'c';
+}
+===[STUDENT TESTS/bad7.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad7.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad7.bminor
+main:function integer () = {
+	return 'c';
+}
+ERRORS: INCOHERENT TYPES IN FUNCTIONS:)
+			function (main) expects return type of integer but received type of char
+
+
+
+
+===[STUDENT TESTS/bad8.bminor Input]===
+y: integer = 10;
+
+main: function void ()=
+{
+	y: integer = 10;
+	{
+		
+		y: integer = 10;
+		{
+			
+			x: integer = 5;
+			y: integer = 10;
+		}
+		y = x + y;
+	}
+}
+
+===[STUDENT TESTS/bad8.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad8.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad8.bminor
+y:integer = 10;
+main:function void () = {
+	y:integer = 10;
+	{
+		y:integer = 10;
+		{
+			x:integer = 5;
+			y:integer = 10;
+		}
+		y = x + y;
+	}
+}
+y resolves to local 1
+x resolves to local 2
+y resolves to local 1
+
+
+
+
+===[STUDENT TESTS/bad9.bminor Input]===
+x: integer = 5;
+y: integer = 10;
+
+main: function void ()=
+{
+	x:integer = y * 10 + 15 - test();
+}
+
+test: function char () =
+{
+	return 'a';
+}
+===[STUDENT TESTS/bad9.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad9.bminor Output]===
+--typecheck /escnfs/home/dsimone2/typecheck/rshi2-compiler/test/typecheck/bad9.bminor
+parse error: syntax error
+Parse failed.
+
+
+
+
+=====HIDDEN TESTS=====
+====Good Tests====
+===[HIDDEN TESTS/good1.bminor Input]===
+/*
+Correct: The parameter name can vary as long as the type is the same.
+*/
+
+x: function integer(a:integer);
+
+x: function integer(b:integer) = {
+	return 0;
+}
+
+x: function integer(c:integer);
+
+===[HIDDEN TESTS/good1.bminor Status]===
+return code: 1
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good1.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good1.bminor
+x:function integer ( a: integer );
+x:function integer ( b: integer ) = {
+	return 0;
+}
+x:function integer ( c: integer );
+
+
+
+
+===[HIDDEN TESTS/good2.bminor Input]===
+/*
+Correct: Test various nested definitions.
+*/
+
+f: function void() = {
+	x: integer = 1;
+	{
+		print x;
+		x: integer = x + 1;
+		print x;
+	}
+	print x;
+}
+
+===[HIDDEN TESTS/good2.bminor Status]===
+return code: 1
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good2.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good2.bminor
+f:function void () = {
+	x:integer = 1;
+	{
+		print x;
+		x:integer = x + 1;
+		print x;
+	}
+	print x;
+}
+x resolves to local 1
+x resolves to local 1
+x resolves to local 1
+x resolves to local 1
+
+
+
+
+===[HIDDEN TESTS/good3.bminor Input]===
+/*
+Correct: Test various function return types.
+*/
+
+A: function boolean(x: integer, y: integer);
+B: function integer(x: char);
+C: function char(a: string);
+
+main: function integer() = {
+	i: integer;
+	for (i = 0; i < 10; i++)
+		if (i % 2 == 0)
+			print i;
+		else
+			return i;
+
+	if (A(B('d') - 1, 10)) {
+		x: integer = 0;
+		return 2 * B('c') + x;
+	}
+
+	return B(C("hello")) % 3;
+}
+
+===[HIDDEN TESTS/good3.bminor Status]===
+return code: 1
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good3.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good3.bminor
+A:function boolean ( x: integer, y: integer );
+B:function integer ( x: char );
+C:function char ( a: string );
+main:function integer () = {
+	i:integer;
+	for (i = 0; i < 10; i++) {
+		if (i % 2 == 0) {
+			print i;
+		}
+		else {
+			return i;
+		}
+	}
+	if (A[]) {
+		x:integer = 0;
+		return 2 * B[] + x;
+	}
+	return B[] % 3;
+}
+i resolves to local 1
+i resolves to local 1
+i resolves to local 1
+i resolves to local 1
+i resolves to local 1
+i resolves to local 1
+A resolves to global A
+resolve error: (null) is not defined
+B resolves to global B
+resolve error: (null) is not defined
+B resolves to global B
+resolve error: (null) is not defined
+x resolves to local 2
+B resolves to global B
+resolve error: (null) is not defined
+C resolves to global C
+resolve error: (null) is not defined
+
+
+
+
+===[HIDDEN TESTS/good4.bminor Input]===
+/*
+Correct: Test combinations of boolean operators.
+*/
+
+func: function void(
+		a: integer,
+		b: integer,
+		c: boolean,
+		d: boolean
+	) = {
+
+	print a -b;
+	print c && d;
+	print a + b * a - a ^ b /a;
+
+	print a < b && d;
+	print (a < b) || (c && d);
+}
+
+===[HIDDEN TESTS/good4.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good4.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good4.bminor
+func:function void ( a: integer, b: integer, c: boolean, d: boolean ) = {
+	print a - b;
+	print c && d;
+	print (a + b * a) - a ^ b / a;
+	print a < b && d;
+	print a < b || c && d;
+}
+a resolves to param 1
+b resolves to param 2
+c resolves to param 3
+d resolves to param 4
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+a resolves to param 1
+b resolves to param 2
+d resolves to param 4
+a resolves to param 1
+b resolves to param 2
+c resolves to param 3
+d resolves to param 4
+
+
+
+
+===[HIDDEN TESTS/good5.bminor Input]===
+/*
+Correct: Test array assignments.
+*/
+
+x:array [5] integer = {1,2,3,4,5};
+y:array [5] array [5] integer;
+
+main:function void () =
+{
+	y[1] = x;
+	count:integer;
+	for(count = 0; count < 5; count++)
+	{
+		y[count] = x;
+	} 	
+}
+
+===[HIDDEN TESTS/good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good5.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good5.bminor
+x:array[5] integer = {1, 2, 3, 4, 5};
+y:array[5] array[5] integer;
+main:function void () = {
+	y[1] = x;
+	count:integer;
+	for (count = 0; count < 5; count++) {
+		y[count] = x;
+	}
+}
+y resolves to global y
+x resolves to global x
+count resolves to local 1
+count resolves to local 1
+count resolves to local 1
+y resolves to global y
+count resolves to local 1
+x resolves to global x
+
+
+
+
+===[HIDDEN TESTS/good7.bminor Input]===
+/*
+Correct: Test if-expression and return-expression.
+*/
+
+main: function integer() = {
+	m: integer = 2;
+	n: boolean = true;
+
+	if (!n) return 0; else return -m;
+
+	print 10 * (-1 + m);
+}
+
+===[HIDDEN TESTS/good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good7.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good7.bminor
+main:function integer () = {
+	m:integer = 2;
+	n:boolean = true;
+	if ( ! n) {
+		return 0;
+	}
+	else {
+		return (m);
+	}
+	print 10 * (-1 + m);
+}
+n resolves to local 2
+m resolves to local 1
+m resolves to local 1
+
+
+
+
+===[HIDDEN TESTS/good8.bminor Input]===
+/*
+Correct: Boolean expression in several places.
+*/
+
+x: function integer(a:boolean) = {
+	if (a) for (;a;) print a;
+}
+
+===[HIDDEN TESTS/good8.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good8.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good8.bminor
+x:function integer ( a: boolean ) = {
+	if (a) {
+		for (; a;) {
+			print a;
+		}
+	}
+}
+a resolves to param 1
+a resolves to param 1
+a resolves to param 1
+
+
+
+
+===[HIDDEN TESTS/good9.bminor Input]===
+/*
+Correct: A program to plot a quadratic function. 
+*/
+
+/* Make use of atoi from the standard library */
+
+atoi: function integer( s: string );
+
+quadratic: function integer ( a: integer, b: integer, c: integer, x: integer ) = {
+	return a*x*x + b*x + c*x;
+}
+
+main: function integer ( argc: integer, argv: array [] string ) =  {
+
+      if(argc<3) {
+          print "use: ", argv[0], "[a] [b] [c] [start] [end]\n";
+      }
+
+      a: integer = atoi(argv[0]);
+      b: integer = atoi(argv[1]);
+      c: integer = atoi(argv[2]);
+      start: integer = atoi(argv[3]);
+      end: integer = atoi(argv[4]);
+
+
+      x: integer;
+      
+      for(x=start;x<end;x++) {
+          print x, " ", quadratic(a,b,c,x), "\n";
+      }
+
+      return 0;
+}
+
+===[HIDDEN TESTS/good9.bminor Status]===
+return code: -11
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good9.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good10.bminor Input]===
+/*
+
+Testing float typechecking
+
+*/
+
+main: function integer() = {
+    m: float = 3.1;
+    n: float = 5.2;
+    
+    x: float = m + n;
+
+    print x;
+}
+
+===[HIDDEN TESTS/good10.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good10.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good10.bminor
+main:function integer () = {
+	m: = 3.100000;
+	n: = 5.200000;
+	x: = m + n;
+	print x;
+}
+m resolves to local 1
+n resolves to local 2
+x resolves to local 3
+
+
+
+
+===[HIDDEN TESTS/good6.bminor Input]===
+/*
+Correct: Test assignment of array literals.
+*/
+
+main: function void (a: integer) = {
+	x: array [1] boolean;
+	y: array [1] integer;
+	if (x[y[a]]) return;
+	{
+		z: integer;
+		zz: integer = z;
+	}
+}
+
+===[HIDDEN TESTS/good6.bminor Status]===
+return code: 1
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good6.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/good6.bminor
+parse error: syntax error
+Parse failed.
+
+
+
+
+====Bad Tests====
+===[HIDDEN TESTS/bad1.bminor Input]===
+/*
+Incorrect: Mismatched types in forward declaration
+*/
+
+x: function integer(a:char);
+x: function integer(a:integer) = {
+	return 0;
+}
+
+===[HIDDEN TESTS/bad1.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad1.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad1.bminor
+x:function integer ( a: char );
+x:function integer ( a: integer ) = {
+	return 0;
+}
+
+
+
+
+===[HIDDEN TESTS/bad2.bminor Input]===
+/*
+Incorrect: Variable redefined within a scope.
+*/
+
+f: function void() = {
+	x: integer = 1;
+	{
+		print x;
+		x: integer = x + 1;
+		print x;
+	}
+	x: integer = 2;
+	print x;
+}
+
+===[HIDDEN TESTS/bad2.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad2.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad2.bminor
+f:function void () = {
+	x:integer = 1;
+	{
+		print x;
+		x:integer = x + 1;
+		print x;
+	}
+	x:integer = 2;
+	print x;
+}
+x resolves to local 1
+x resolves to local 1
+x resolves to local 1
+x resolves to local 1
+
+
+
+
+===[HIDDEN TESTS/bad3.bminor Input]===
+/*
+Incorrect: Mismatched function return types.
+*/
+
+main: function void() = {
+	return i;
+}
+
+func: function integer() = {
+	return;
+}
+
+===[HIDDEN TESTS/bad3.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad3.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad3.bminor
+parse error: syntax error
+Parse failed.
+
+
+
+
+===[HIDDEN TESTS/bad4.bminor Input]===
+/*
+Incorrect: Mismatched operators.
+*/
+
+
+func: function void(
+		a: integer,
+		b: integer,
+		c: boolean,
+		d: boolean
+	) = {
+
+	print a -c;
+	print c * d;
+	print a + b * a - a ^ b /d;
+
+	print a < b && a;
+	print (a < b) + (c && d);
+}
+
+===[HIDDEN TESTS/bad4.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad4.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad4.bminor
+func:function void ( a: integer, b: integer, c: boolean, d: boolean ) = {
+	print a - c;
+	print c * d;
+	print (a + b * a) - a ^ b / d;
+	print a < b && a;
+	print (a < b) + (c && d);
+}
+a resolves to param 1
+c resolves to param 3
+c resolves to param 3
+d resolves to param 4
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+a resolves to param 1
+b resolves to param 2
+d resolves to param 4
+a resolves to param 1
+b resolves to param 2
+a resolves to param 1
+a resolves to param 1
+b resolves to param 2
+c resolves to param 3
+d resolves to param 4
+ERRORS: CANNOT DO ARITHMETIC:)
+			a - ccannot subtract (c) which is of type boolean from (a) which is of type integer
+ERRORS: CANNOT DO ARITHMETIC:)
+			c * dcannot multiply (c) which is of type boolean by (d) which is of type boolean
+ERRORS: CANNOT DO ARITHMETIC:)
+			a ^ b / dcannot divide (a ^ b) which is of type integer by (d) which is of type boolean
+ERRORS: LOGICAL OPERATORS MUST GO BEFORE BOOLEAN VALUES:
+			a < b && a : a < b belongs to boolean while a belongs to integer
+ERRORS: CANNOT DO ARITHMETIC:)
+			(a < b) + (c && d)cannot add (c && d) which is of type boolean to (a < b) which is of type boolean
+
+
+
+
+===[HIDDEN TESTS/bad5.bminor Input]===
+/*
+Incorrect: Cannot subscript a value which is not an array.
+*/
+
+main: function void() = {
+	s : boolean = false;
+	c : char = s[1];
+	print c;
+}
+
+===[HIDDEN TESTS/bad5.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad5.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad5.bminor
+main:function void () = {
+	s:boolean = false;
+	c:char = s[1];
+	print c;
+}
+s resolves to local 1
+c resolves to local 2
+ERRORS: INDEXING IS WRONG:)
+			s[1]
+ERRORS: INCOHERENT VALUE TYPE:)
+			cannot assign c which is of type char to s[1] which is of type boolean
+
+
+
+
+===[HIDDEN TESTS/bad6.bminor Input]===
+/*
+Incorrect: Cannot assign an array to an atomic type.
+*/
+
+main: function void () = {
+	// array of one boolean != boolean
+	x: array [1] boolean = {true};
+	if (x) return;
+}
+
+===[HIDDEN TESTS/bad6.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad6.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad6.bminor
+parse error: syntax error
+Parse failed.
+
+
+
+
+===[HIDDEN TESTS/bad7.bminor Input]===
+/*
+Incorrect: Improper operators on values.
+*/
+
+main: function integer() = {
+	m: integer = 2;
+	n: boolean = true;
+
+	// wrong negation
+	if (-n) return 0; else return !m;
+
+	// arithmetic on boolean
+	print 10 * (-1 + n);
+}
+
+===[HIDDEN TESTS/bad7.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad7.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad7.bminor
+main:function integer () = {
+	m:integer = 2;
+	n:boolean = true;
+	if ((n)) {
+		return 0;
+	}
+	else {
+		return  ! m;
+	}
+	print 10 * (-1 + n);
+}
+n resolves to local 2
+m resolves to local 1
+n resolves to local 2
+ERRORS: NEGATIVE GOES BEFORE NUMBERS:)
+			(n) : (n belongs to boolean
+ERRORS: these aren't BOOLEAN VALUES!!!
+			 ! m : (m belongs to integer
+ERRORS: CANNOT DO ARITHMETIC:)
+			-1 + ncannot add (n) which is of type boolean to (-1) which is of type integer
+
+
+
+
+===[HIDDEN TESTS/bad8.bminor Input]===
+/*
+Incorrect: Cannot use an integer in place of a boolean.
+*/
+
+x: function integer(a:integer) = {
+	if (a) return 10;
+	for (;a;) print a;
+}
+
+===[HIDDEN TESTS/bad8.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad8.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad8.bminor
+x:function integer ( a: integer ) = {
+	if (a) {
+		return 10;
+	}
+	for (; a;) {
+		print a;
+	}
+}
+a resolves to param 1
+a resolves to param 1
+a resolves to param 1
+ERRORS: MISSING BOOLEAN EXPRESSION:)
+			if(a) : expects a boolean expression but received type of integer
+ERRORS: MISSING CONDITION:)
+			for(;a;) : expects the second expression to be boolean but received type of integer
+
+
+
+
+===[HIDDEN TESTS/bad9.bminor Input]===
+/*
+Incorrect: Several type mismatches throughout.
+*/
+
+/* Make use of atoi from the standard library */
+
+atoi: function boolean ( s: string );
+
+quadratic: function void ( a: char, b: string, c: boolean, x: integer ) = {
+	return a*x*x + b*x + c*x;
+}
+
+main: function integer ( argc: integer, argv: array [] string ) =  {
+
+      if(argc<3) {
+          print "use: ", argv[0], "[a] [b] [c] [start] [end]\n";
+      }
+
+      a: integer = atoi(argv[0]);
+      b: integer = atoi(argv[1]);
+      c: integer = atoi(argv[2]);
+      start: integer = atoi(argv[3]);
+      end: integer = atoi(argv[4]);
+
+
+      x: integer;
+      
+      for(x=start;x<end;x++) {
+          print x, " ", quadratic(a,b,c,x), "\n";
+      }
+
+      return 0;
+}
+
+===[HIDDEN TESTS/bad9.bminor Status]===
+return code: -11
+Test passed successfully!
+
+===[HIDDEN TESTS/bad9.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/bad10.bminor Input]===
+/*
+Incorrect: Several type errors throughout.
+*/
+
+abs: function string (n: integer);
+
+digits: array [6] char = {
+	14,
+	8,
+	6168,
+	42,
+	0,
+	74546
+};
+
+main:function integer () = {
+	digits[4] = -468;
+	i: boolean = 0;
+	for (; abs(digits[i]) == digits[i];) {
+		print digits[i];
+		i = i + 1;
+		print ' ';
+	}
+	print '\n';
+        z: float = 1.0 + 2;
+	return 0;
+}
+
+===[HIDDEN TESTS/bad10.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad10.bminor Output]===
+--typecheck /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/typecheck/bad10.bminor
+abs:function string ( n: integer );
+digits:array[6] char = {14, 8, 6168, 42, 0, 74546};
+main:function integer () = {
+	digits[4] = -468;
+	i:boolean = 0;
+	for (; abs[] == digits[i];) {
+		print digits[i];
+		i = i + 1;
+		print ' ';
+	}
+	print '\n';
+	z: = 1.000000 + 2;
+	return 0;
+}
+digits resolves to global digits
+abs resolves to global abs
+resolve error: (null) is not defined
+digits resolves to global digits
+i resolves to local 1
+digits resolves to global digits
+i resolves to local 1
+digits resolves to global digits
+i resolves to local 1
+i resolves to local 1
+i resolves to local 1
+
+
+
+
+===== SUMMARIZED PRINTER RESULTS =====
+{
+  "student_tests": {
+    "Good": {
+      "correct": 10,
+      "incorrect": 0
+    },
+    "Bad": {
+      "correct": 10,
+      "incorrect": 0
+    }
+  },
+  "hidden_tests": {
+    "Good": {
+      "correct": 5,
+      "incorrect": 5
+    },
+    "Bad": {
+      "correct": 10,
+      "incorrect": 0
+    }
+  }
+}
+
+Printer Project
+---------------
+
+Continued correctness of the -scan, -parse, -print, and -resolve options (30/30 points)
+----------------------------------------------
+Scanning, parsing, printing, and resolving all seem to be correct.
+
+General correctness of the -typecheck option. (20/20 points)
+----------------------------------------------
+Typechecking looks to be done correctly
+
+Student Tests (20/20 points)
+------------------------------------------
+Nice test coverage
+
+Hidden Tests (15/20 points)
+------------------------------------------
+Looks like some hidden correct tests did not pass successfully, there are some minor edge cases missing from your compiler it looks like.
+
+Coding Style (10/10 points)
+------------------------------------------
+Coding style looks quite nice. Well done!
+
+---------------
