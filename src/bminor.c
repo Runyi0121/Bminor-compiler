@@ -16,6 +16,8 @@ extern int yyparse();
 extern struct decl * parser_result;
 int resolve_error;
 int typecheck_error;
+int codegen_error;
+FILE *fp;
 
 void usage(int num)
 {
@@ -29,13 +31,14 @@ void usage(int num)
     }
 }
 int main (int argc, char *argv[]){
+
     bool check_encode = false;
     bool check_scan = false; 
     bool check_parse = false;
     bool check_print = false;
     bool check_resolve = false;
     bool check_typecheck = false;
-
+    bool check_codegen = false;
     if (argc == 3){
         printf("%s %s\n", argv[1], argv[2]);
         if (strcmp(argv[1], "--encode") == 0){
@@ -56,17 +59,50 @@ int main (int argc, char *argv[]){
         else if (strcmp(argv[1], "--typecheck") == 0){
             check_typecheck = true;
         }
-        else{    
-            printf("Do not have the right command arguments.\n");
-            return 1;
         }
-    } 
+    else if (argc == 4){
+        if (strcmp(argv[1], "--codegen") == 0){
+            check_codegen = true;
+        }
+    }
     else {
-        printf("Do not have enough command arguments.\n");
+        printf("Do not have correct number of command arguments.\n");
         return 1;
     }
 
-    if ( check_typecheck == true) {
+    if ( check_codegen == true){
+        char * file = argv[2];
+        char *assembly = argv[3];
+        yyin = fopen (file, "r");
+        if (! yyin){
+            usage(1);
+        }
+        int y = yyparse();
+        decl_print(parser_result, 0);
+        if ( y ) {
+                printf("Parse failed.\n");
+                return 1;
+                }
+        resolve_error = 0;
+        struct hash_table * hashtable = hash_table_create(0, 0);
+        struct scope *sc = scope_create(0, hashtable, 0, 0);
+
+        decl_resolve(sc, parser_result);
+        if (resolve_error != 0) return 1;
+        
+        typecheck_error = 0;
+        decl_typecheck(parser_result);
+        if (typecheck_error != 0) return 1;
+        
+        codegen_error = 0;
+        fp = fopen(assembly, "w");
+        fprintf(fp, ".file \"%s\"\n", file);
+        decl_codegen(parser_result);
+    
+        if (codegen_error != 0) return 1;
+        else return 0;
+    }
+    else if ( check_typecheck == true) {
         char * file = argv[2];
         yyin = fopen (file, "r");
         if (! yyin){

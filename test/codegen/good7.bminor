@@ -1,0 +1,10 @@
+strings: string = "bye";
+main: function string () = {
+    if (false) {
+        return "hello";
+    }
+    else {
+        return strings;
+    }
+}
+

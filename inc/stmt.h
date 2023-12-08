@@ -34,4 +34,6 @@ struct stmt * stmt_create( stmt_t kind, struct decl *decl, struct expr *init_exp
 void stmt_print( struct stmt *s, int indent);
 void stmt_resolve( struct scope *sc, struct stmt *st);
 struct type * stmt_typecheck( struct stmt *s, struct decl *return_type );
+void stmt_codegen( struct stmt *s );
+void stmt_codegen_print( struct stmt *s );
 #endif

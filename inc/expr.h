@@ -4,6 +4,7 @@
 #include "symbol.h"
 #include "scope.h"
 #include "decl.h"
+#include "scratch.h"
 
 struct decl;
 
@@ -61,12 +62,12 @@ struct expr {
 	int group;
 	int cond_expr;
 	struct type * type_err;
+	int reg;
 };
 
 struct expr * expr_create( expr_t kind, struct expr *left, struct expr *right);
 struct expr * expr_create_mid (expr_t kind, const char *n, struct expr *mid );
 struct expr * expr_create_decl( expr_t kind, const char *n, struct expr *mid );
-
 
 struct expr * expr_create_name( const char *n );
 struct expr * expr_create_integer_literal( int c );
@@ -82,4 +83,8 @@ struct type * expr_typecheck( struct expr *e );
 struct expr * expr_copy( struct expr *e );
 int expr_value_compare( struct expr *e1, struct expr *e2 );
 
+void expr_codegen( struct expr *e );
+void expr_codegen_assign( struct expr *e );
+void expr_codegen_cmp( struct expr *e );
+void expr_codegen_func( struct expr *e );
 #endif

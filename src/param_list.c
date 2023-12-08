@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 extern int resolve_error;
+extern int typecheck_error;
 
 struct param_list * param_list_create( char *name, struct type *type, struct param_list *next ) {
     struct param_list* p = malloc(sizeof(struct param_list));

@@ -42,7 +42,6 @@ done
 
 for testfile in ./test/parse/bad*.bminor
 do
-	echo $testfile
 	if ./bminor --parse $testfile > $testfile.out
 	then
 		echo "$testfile success (INCORRECT)"
@@ -83,7 +82,6 @@ done
 
 for testfile in ./test/resolve/bad*.bminor
 do
-	echo $testfile
 	if ./bminor --resolve $testfile > $testfile.out
 	then
 		echo "$testfile success (INCORRECT)"
@@ -104,7 +102,6 @@ done
 
 for testfile in ./test/typecheck/bad*.bminor
 do
-	echo $testfile
 	if ./bminor --typecheck $testfile > $testfile.out
 	then
 		echo "$testfile success (INCORRECT)"
@@ -112,3 +109,13 @@ do
 		echo "$testfile failure (as expected)"
 	fi
 done
+
+for testfile in ./test/codegen/good*.bminor
+    do 
+        if ./codegen.sh "$testfile" > "$testfile.out" 
+        then 
+            echo "$testfile success (as expected)"
+        else
+            echo "$testfile failure (INCORRECT)"
+        fi
+    done

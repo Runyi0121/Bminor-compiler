@@ -9,6 +9,3 @@ October:function integer ( a: integer, b: integer ) = {
 		return b;
 	}
 }
-November:function void ( z: integer, min: array [200] integer) = {
-	print "minimum", min[105], "\n", z = 10, z == 10;
-}

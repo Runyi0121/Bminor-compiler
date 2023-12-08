@@ -40,10 +40,12 @@ typedef enum {
     ERR_VOID,
     ERR_NO_RETURN,
     ERR_FUNC_PARAM,
+    ERR_FUNC_AUTO_PARAM,
     ERR_NON_ARR,
     ERR_ARR_INDEX,
     ERR_BAD_ARR_TYPE,
     ERR_ARR_LIT_TYPE,
+    ERR_ARR_LIT_GLOBAL,
     ERR_AUTO,
     ERR_CONST,
 } error_t;

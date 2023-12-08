@@ -28,7 +28,10 @@ void decl_print( struct decl *d, int indent );
 void indent_print( int indent );
 void decl_resolve ( struct scope * s, struct decl *d );
 void decl_typecheck ( struct decl *d );
-
+void decl_codegen( struct decl *d );
+void decl_prologue( struct decl *d );
+void decl_epilogue( struct decl *d );
+void global_label( struct decl *d );
 #endif
 
 
